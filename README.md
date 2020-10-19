@@ -16,5 +16,5 @@ $ pip install pygame==2.0.0.dev12
 
 # Execution
 
-To execute the program: `$ python game.py`
+To execute the program: `$ python main.py`
 
