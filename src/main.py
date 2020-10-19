@@ -1,5 +1,6 @@
-
-
+'''
+Execute this file to run the game. This file is where all of the code for the project is called.
+'''
 # Import Pygame
 import pygame
 from pygame.locals import *
@@ -8,13 +9,16 @@ from pygame.locals import *
 pygame.init()
 
 # Import other files
-from game import game as game
+from game import game
 from level.level import Level
 
-"""
-Game Loop
-"""
+####################################################################################################
+# Game Loop
+####################################################################################################
 def run():
+    '''
+    This function sets up the window and runs the game loop
+    '''
     # Boolean for if the game is supposed to be running
     running = True
 
@@ -22,11 +26,12 @@ def run():
     clock = pygame.time.Clock()
 
     # Create game window
-    screen = pygame.display.set_mode((game.SCREEN_WIDTH, game.SCREEN_HEIGHT), pygame.RESIZABLE | pygame.SCALED)
-    
+    screen = pygame.display.set_mode((game.SCREEN_WIDTH, game.SCREEN_HEIGHT),\
+         pygame.RESIZABLE | pygame.SCALED)
+
     # Set program name in title-bar
     pygame.display.set_caption("Cawepa")
-    
+
     # Set icon in title-bar
     icon = pygame.image.load('res/graphics/icon.png')
     pygame.display.set_icon(icon)
@@ -41,7 +46,6 @@ def run():
             # Check if running
             if event.type == pygame.QUIT:
                 running = False
-            
             # Check if keys are pressed
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
@@ -73,25 +77,35 @@ def run():
         #Pygame - 60 updates/ticks per second
         clock.tick(60)
 
-"""
-Update function called 60 times a second
-"""
+####################################################################################################
+# Update function called 60 times a second
+####################################################################################################
 def update(level):
+    '''
+    This updates the level and other top-level aspects of the game.
+    Things like the player and mobs are updated within the level, not here.
+    '''
     level.update()
 
-"""
-Reder everything to screen
-"""
+####################################################################################################
+# Reder everything to screen
+####################################################################################################
 def draw(screen, level):
+    '''
+    This draws everything
+    '''
     # Clear Screen
     screen.fill((0, 0, 0))
     level.draw(screen)
     pygame.display.update()
 
-"""
-Program execution starts here
-"""
+####################################################################################################
+# Program execution starts here
+####################################################################################################
 def main():
+    '''
+    Starts the game, I might copy the code from run() and just put it here in the short future.
+    '''
     run()
 
 if __name__ == "__main__":
