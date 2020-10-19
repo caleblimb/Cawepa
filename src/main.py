@@ -1,3 +1,5 @@
+
+
 # Import Pygame
 import pygame
 from pygame.locals import *
@@ -6,8 +8,8 @@ from pygame.locals import *
 pygame.init()
 
 # Import other files
+from game import game as game
 from level.level import Level
-import game
 
 """
 Game Loop
