@@ -43,7 +43,7 @@ class Player(Mob):
             self.sprite_right.append(Sprite(sprite_sheet.get_image(32 * frame, 32 * 1, 32, 32), 32, 32))
             self.sprite_down .append(Sprite(sprite_sheet.get_image(32 * frame, 32 * 2, 32, 32), 32, 32))
             self.sprite_left .append(Sprite(sprite_sheet.get_image(32 * frame, 32 * 3, 32, 32), 32, 32))
-        
+
         self.sprite = self.sprite_down[0]
         self.collision_mask = CollisionMask(12, 12, -6, -6)
         self.sprite_x_offset = 16

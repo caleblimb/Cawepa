@@ -24,6 +24,7 @@ class Mob(Entity):
             return
 
         while (xa != 0):
+            self.collision_mask.update(self.x, self.y)
             if (abs(xa) > 1):
                 if (not self.tile_collision(tile_map, tiles, width, height, self.one(xa), int(ya))):
                     self.x += self.one(xa)
@@ -33,6 +34,7 @@ class Mob(Entity):
                     self.x += xa
                 xa = 0
         while (ya != 0):
+            self.collision_mask.update(self.x, self.y)
             if (abs(ya) > 1):
                 if (not self.tile_collision(tile_map, tiles, width, height, int(xa), self.one(ya))):
                     self.y += self.one(ya)

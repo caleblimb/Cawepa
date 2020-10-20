@@ -55,16 +55,10 @@ class Entity():
         '''
         This method is used for collision detection with solid tiles such as walls.
         '''
-        '''
         x0 = int((self.collision_mask.x + xa) / 16)
         x1 = int((self.collision_mask.x + xa + self.collision_mask.width) / 16)
         y0 = int((self.collision_mask.y + ya) / 16)
         y1 = int((self.collision_mask.y + ya + self.collision_mask.height) / 16)
-        '''
-        x0 = int((self.x + xa - 6) / 16)
-        x1 = int((self.x + xa + 6) / 16)
-        y0 = int((self.y + ya - 6) / 16)
-        y1 = int((self.y + ya + 6) / 16)
 
         return self.get_tile(tile_map, tiles, width, height, x0, y0).solid or \
                self.get_tile(tile_map, tiles, width, height, x1, y0).solid or \
