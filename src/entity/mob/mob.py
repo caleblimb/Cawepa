@@ -12,18 +12,23 @@ class Mob(Entity):
     tred = 0
 
     def __init__(self, x, y):
-       super().__init__(x, y)
+        super().__init__(x, y)
 
     ################################################################################################
     # Move Mob to new position
     ################################################################################################
     def move (self, tile_map, tiles, width, height, xa, ya):
+        ''' This handles the movement of mobs. It handles each direction separately so that if
+            it tries moving up against a wall, it can still slide along the surface instead of
+            getting stuck. '''
+        # Move one direction at a time
         if (xa != 0 and ya != 0):
             self.move(tile_map, tiles, width, height, xa, 0)
             self.move(tile_map, tiles, width, height, 0, ya)
             return
 
-        while (xa != 0):
+        # Move horizontally
+        while xa != 0:
             self.collision_mask.update(self.x, self.y)
             if (abs(xa) > 1):
                 if (not self.tile_collision(tile_map, tiles, width, height, self.one(xa), int(ya))):
@@ -33,17 +38,19 @@ class Mob(Entity):
                 if (not self.tile_collision(tile_map, tiles, width, height, self.one(xa), int(ya))):
                     self.x += xa
                 xa = 0
-        while (ya != 0):
+
+        # Move vertically
+        while ya != 0:
             self.collision_mask.update(self.x, self.y)
-            if (abs(ya) > 1):
-                if (not self.tile_collision(tile_map, tiles, width, height, int(xa), self.one(ya))):
+            if abs(ya) > 1:
+                if not self.tile_collision(tile_map, tiles, width, height, int(xa), self.one(ya)):
                     self.y += self.one(ya)
                 ya -= self.one(ya)
             else:
-                if (not self.tile_collision(tile_map, tiles, width, height, int(xa), self.one(ya))):
+                if not self.tile_collision(tile_map, tiles, width, height, int(xa), self.one(ya)):
                     self.y += ya
                 ya = 0
-            
+
         self.tred = self.tile_depth(tile_map, tiles, width, height)
 
     ################################################################################################
@@ -54,7 +61,7 @@ class Mob(Entity):
         This function takes a number and returns 1 if positive and -1 if negative.
         It is used for the movement of mobs.
         '''
-        if (value < 0):
+        if value < 0:
             return -1
         return 1
 
@@ -71,4 +78,7 @@ class Mob(Entity):
         if self.tred == 0:
             super().draw(screen, x_offset, y_offset)
         else:
-            self.sprite.draw_sub(screen, self.x - self.sprite_x_offset - x_offset, self.y - self.sprite_y_offset - y_offset, self.tred)
+            self.sprite.draw_sub(screen, \
+                                 self.x - self.sprite_x_offset - x_offset, \
+                                 self.y - self.sprite_y_offset - y_offset, \
+                                 self.tred)

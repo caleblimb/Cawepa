@@ -10,30 +10,33 @@ from .mob import Mob
 from ..collision_mask import CollisionMask
 
 class Player(Mob):
-    '''
-    Defines universal characteristics for all Mobs ie Players, Monsters, NPCs...
-    '''
+    ''' Defines universal characteristics for all Mobs ie Players, Monsters, NPCs... '''
     class Direction(Enum):
-        '''
-        Direction player is facing
-        '''
+        ''' Direction player is facing '''
         UP = 0
         RIGHT = 1
         DOWN = 2
         LEFT = 3
 
+    # Arrays of sprites for animations
     sprite_up = []
     sprite_right = []
     sprite_down = []
     sprite_left = []
 
+    # Current Frame
     frame = 0.0
+
+    # Number of frames
     frame_count = 8
 
+    # Starting direction
     direction = Direction.DOWN
 
     def __init__(self, x, y):
         super().__init__(x, y)
+
+        # Create Player spritesheet
         pygame.sprite.Sprite.__init__(self)
         sprite_sheet = SpriteSheet("res/graphics/player.png")
 
@@ -44,8 +47,13 @@ class Player(Mob):
             self.sprite_down .append(Sprite(sprite_sheet.get_image(32 * frame, 32 * 2, 32, 32), 32, 32))
             self.sprite_left .append(Sprite(sprite_sheet.get_image(32 * frame, 32 * 3, 32, 32), 32, 32))
 
+        # Starting Sprite
         self.sprite = self.sprite_down[0]
+
+        # Define collision mask
         self.collision_mask = CollisionMask(12, 12, -6, -6)
+
+        # Place (x, y) origin in the center of where the feet are.
         self.sprite_x_offset = 16
         self.sprite_y_offset = 25
 
@@ -53,9 +61,12 @@ class Player(Mob):
         self.collision_mask.update(self.x, self.y)
         update_frame = False
         player_speed = 2
+
+        # Ammount to move
         xa = 0
         ya = 0
 
+        # Check for player input to move the player
         if game.INPUT_RIGHT:
             xa += player_speed
             self.direction = Player.Direction.RIGHT

@@ -17,19 +17,15 @@ pygame.init()
 # Update function called 60 times a second
 ####################################################################################################
 def update(level):
-    '''
-    This updates the level and other top-level aspects of the game.
-    Things like the player and mobs are updated within the level, not here.
-    '''
+    ''' This updates the level and other top-level aspects of the game.
+    Things like the player and mobs are updated within the level, not here. '''
     level.update()
 
 ####################################################################################################
 # Reder everything to screen
 ####################################################################################################
 def draw(screen, level):
-    '''
-    This draws everything
-    '''
+    ''' This draws everything '''
     # Clear Screen
     screen.fill((0, 0, 0))
     level.draw(screen)
@@ -39,9 +35,7 @@ def draw(screen, level):
 # Game Loop - Program execution starts here
 ####################################################################################################
 def main():
-    '''
-    This function sets up the window and runs the game loop
-    '''
+    ''' This function sets up the window and runs the game loop '''
     # Boolean for if the game is supposed to be running
     running = True
 
@@ -59,8 +53,10 @@ def main():
     icon = pygame.image.load('res/graphics/icon.png')
     pygame.display.set_icon(icon)
 
+    # Set which level to start the game on, we'll change this to a menu screen later.
     current_level = Level1()
 
+    # Game Loop
     while running:
         # Loop through Pygame Events
         for event in pygame.event.get():

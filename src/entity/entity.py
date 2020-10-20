@@ -19,27 +19,23 @@ class Entity():
     # Update Entity
     ################################################################################################
     def update(self, tile_map, tiles, width, height):
-        '''
-        This method is necessary as a placeholder for child classes
-        '''
+        ''' This method is necessary as a placeholder for child classes '''
 
     ################################################################################################
     # Draw Entity
     ################################################################################################
     def draw(self, screen, x_offset, y_offset):
-        '''
-        Draws the sprite to the screen. x_offset and y_offset refer to the camera position.
-        '''
-        self.sprite.draw(screen, self.x - self.sprite_x_offset - x_offset, self.y - self.sprite_y_offset - y_offset)
+        ''' Draws the sprite to the screen. x_offset and y_offset refer to the camera position. '''
+        self.sprite.draw(screen, \
+                         self.x - self.sprite_x_offset - x_offset, \
+                         self.y - self.sprite_y_offset - y_offset)
 
 
     ################################################################################################
     # Get tile at coordinate x, y
     ################################################################################################
     def get_tile(self, tile_map, tiles, width, height, x, y):
-        '''
-        Takes a tile coordinate and returns the type of tile at that location.
-        '''
+        ''' Takes a tile coordinate and returns the type of tile at that location. '''
         if (x < 0 or y < 0 or x >= width or y >= height or len(tile_map) == 0 or\
                 len(tiles) == 0):
             return tiles[0]
@@ -52,14 +48,15 @@ class Entity():
     # Get solid status tile at coordinate x, y
     ################################################################################################
     def tile_collision(self, tile_map, tiles, width, height, xa, ya):
-        '''
-        This method is used for collision detection with solid tiles such as walls.
-        '''
+        ''' This method is used for collision detection with solid tiles such as walls. '''
+        # Define the 4 corners of the collsion mask
+        # top-left = (x0, y0), top-right = (x1,y0), bottom-left = (x0, y1), bottom-right = (x1, y1)
         x0 = int((self.collision_mask.x + xa) / 16)
         x1 = int((self.collision_mask.x + xa + self.collision_mask.width) / 16)
         y0 = int((self.collision_mask.y + ya) / 16)
         y1 = int((self.collision_mask.y + ya + self.collision_mask.height) / 16)
 
+        # Return a collsion if any of the four corners run into a solid tile
         return self.get_tile(tile_map, tiles, width, height, x0, y0).solid or \
                self.get_tile(tile_map, tiles, width, height, x1, y0).solid or \
                self.get_tile(tile_map, tiles, width, height, x0, y1).solid or \
@@ -69,15 +66,16 @@ class Entity():
     # Get average depth of collsion mask
     ################################################################################################
     def tile_depth(self, tile_map, tiles, width, height):
-        '''
-        This method takes the depth of each tile at the 4 corners of a collision mask and returns
-        their average
-        '''
+        ''' This method takes the depth of each tile at the 4 corners of a collision mask and
+        returns their average. '''
+        # Define the 4 corners of the collsion mask
+        # top-left = (x0, y0), top-right = (x1,y0), bottom-left = (x0, y1), bottom-right = (x1, y1)
         x0 = int((self.collision_mask.x) / 16)
         x1 = int((self.collision_mask.x + self.collision_mask.width) / 16)
         y0 = int((self.collision_mask.y) / 16)
         y1 = int((self.collision_mask.y + self.collision_mask.height) / 16)
 
+        # Return average depth of each corner
         return (self.get_tile(tile_map, tiles, width, height, x0, y0).depth + \
                 self.get_tile(tile_map, tiles, width, height, x1, y0).depth + \
                 self.get_tile(tile_map, tiles, width, height, x0, y1).depth + \
