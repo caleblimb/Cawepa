@@ -35,7 +35,7 @@ class GameLevel(Level):
         This loops through every element of the level and calls it's update function.
         '''
         for entity in self.entities:
-            entity.update()
+            entity.update(self.tile_map, self.tiles, self.width, self.height)
             if isinstance(entity, Player):
                 self.scroll_follow(entity.x, entity.y)
 
@@ -88,7 +88,7 @@ class GameLevel(Level):
     ################################################################################################
     def get_tile(self, x, y):
         '''
-        Takes a tile coordinate and returns the type of tile at that location
+        Takes a tile coordinate and returns the type of tile at that location.
         '''
         if (x < 0 or y < 0 or x >= self.width or y >= self.height or len(self.tile_map) == 0 or\
                 len(self.tiles) == 0):
@@ -103,7 +103,8 @@ class GameLevel(Level):
     ################################################################################################
     def load_level(self, file_name):
         '''
-        Loads tiles from file format .csv
+        Loads tiles from file format .csv and returns and array of those tiles.
+        It also sets the width and height of the level tile map
         '''
         map_file = open(file_name, "r")
         rows = map_file.readlines()

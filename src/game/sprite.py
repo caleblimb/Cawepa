@@ -10,11 +10,16 @@ class Sprite():
 
     def __init__(self, image, width, height):
         self.image = image
-        self.width = 0
-        self.height = 0
+        self.width = width
+        self.height = height
 
+    # Draws sprite to screen
     def draw(self, screen, x, y):
         screen.blit(self.image, (x, y))
+
+    # Draws sprite to screen chopping the bottom off according to value of w
+    def draw_sub(self, screen, x, y, w):
+        screen.blit(self.image, (x,y), (0, 0, self.width, self.height - w))
 
 class SpriteSheet(object):
     """ Class used to grab images out of a sprite sheet. """

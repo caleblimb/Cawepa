@@ -6,6 +6,7 @@ This is the template for a type of file
 class Tile():
     sprite = None
     solid = False
+    depth = 0
 
     ################################################################################################
     # Define Tile

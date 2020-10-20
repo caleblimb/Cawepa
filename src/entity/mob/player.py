@@ -7,6 +7,7 @@ import pygame
 from game import game
 from game.sprite import SpriteSheet, Sprite
 from .mob import Mob
+from ..collision_mask import CollisionMask
 
 class Player(Mob):
     '''
@@ -36,6 +37,7 @@ class Player(Mob):
         pygame.sprite.Sprite.__init__(self)
         sprite_sheet = SpriteSheet("res/graphics/player.png")
 
+        # Add each direction of the walking animation
         for frame in range (0, self.frame_count):
             self.sprite_up   .append(Sprite(sprite_sheet.get_image(32 * frame, 32 * 0, 32, 32), 32, 32))
             self.sprite_right.append(Sprite(sprite_sheet.get_image(32 * frame, 32 * 1, 32, 32), 32, 32))
@@ -43,8 +45,12 @@ class Player(Mob):
             self.sprite_left .append(Sprite(sprite_sheet.get_image(32 * frame, 32 * 3, 32, 32), 32, 32))
         
         self.sprite = self.sprite_down[0]
+        self.collision_mask = CollisionMask(12, 12, -6, -6)
+        self.sprite_x_offset = 16
+        self.sprite_y_offset = 25
 
-    def update(self):
+    def update(self, tile_map, tiles, width, height):
+        self.collision_mask.update(self.x, self.y)
         update_frame = False
         player_speed = 2
         xa = 0
@@ -68,8 +74,7 @@ class Player(Mob):
             update_frame = True
 
         # Update player position
-        self.x += xa
-        self.y += ya
+        self.move(tile_map, tiles, width, height, xa, ya)
 
         if update_frame:
             # Update animation frame

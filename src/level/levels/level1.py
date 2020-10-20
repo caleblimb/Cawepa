@@ -26,8 +26,14 @@ class Level1(GameLevel):
         for y in range(0, tile_type_height):
             for x in range(0, tile_type_width):
                 tile = Tile(tile_sheet.get_image(x * 16, y * 16, 16, 16))
-                if y <= 152:
+                
+
+                if y >= 141 and y < 152:
+                    tile.depth = 4
+                if y >= 152:
                     tile.solid = True
+
+
                 self.tiles.append(tile)
 
         self.x_scroll = 400
