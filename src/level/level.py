@@ -29,15 +29,6 @@ class Level():
         '''
         This loops through every element of the level and calls it's update function.
         '''
-        if game.INPUT_UP:
-            self.y_scroll -= 10
-        if game.INPUT_RIGHT:
-            self.x_scroll += 10
-        if game.INPUT_DOWN:
-            self.y_scroll += 10
-        if game.INPUT_LEFT:
-            self.x_scroll -= 10
-
         for entity in self.entities:
             entity.update()
 
@@ -49,4 +40,4 @@ class Level():
         This loops through every element of the level and calls it's draw function.
         '''
         for entity in self.entities:
-            entity.draw(screen)
+            entity.draw(screen, self.x_scroll, self.y_scroll)

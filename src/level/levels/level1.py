@@ -4,6 +4,7 @@ Test Level
 '''
 import pygame
 from game.sprite import SpriteSheet
+from entity.mob.player import Player
 from ..tile.game_level import GameLevel
 from ..tile.tile import Tile
 
@@ -29,3 +30,6 @@ class Level1(GameLevel):
                     tile.solid = True
                 self.tiles.append(tile)
 
+        self.x_scroll = 400
+        self.y_scroll = 400
+        self.entities.append(Player(500, 500))

@@ -3,17 +3,21 @@
 This handles Tile-based levels
 '''
 from game import game
+from entity.mob.player import Player
 from ..level import Level
 
 class GameLevel(Level):
     '''
     Tile Based Level
     '''
-    #Define tile dimenstions
+    # Define tile dimenstions
     width = 0
     height = 0
 
+    # Tile types for level
     tiles = []
+
+    # Tile map for level
     tile_map = []
 
     ################################################################################################
@@ -22,6 +26,42 @@ class GameLevel(Level):
     def __init__(self):
         #Call Level constructor
         super().__init__()
+
+    ################################################################################################
+    # Update Level
+    ################################################################################################
+    def update(self):
+        '''
+        This loops through every element of the level and calls it's update function.
+        '''
+        for entity in self.entities:
+            entity.update()
+            if isinstance(entity, Player):
+                self.scroll_follow(entity.x, entity.y)
+
+    ################################################################################################
+    # Move Camera towards x, y Positon
+    ################################################################################################
+    def scroll_follow(self, x, y):
+        '''
+        Moves camera position towards the x, y position specified in the level
+        '''
+        # Distance from edge of screen that merits moving the camera
+        camera_border = 128
+
+        # Check each of the 4 sides of the screen
+        if x - self.x_scroll < camera_border:
+            if self.x_scroll > 0:
+                self.x_scroll -= 2
+        if x - self.x_scroll > -camera_border + game.SCREEN_WIDTH:
+            if self.x_scroll < self.width * 16 - game.SCREEN_WIDTH:
+                self.x_scroll += 2
+        if y - self.y_scroll < camera_border:
+            if self.y_scroll > 0:
+                self.y_scroll -= 2
+        if y - self.y_scroll > -camera_border + game.SCREEN_HEIGHT:
+            if self.y_scroll < self.height * 16 - game.SCREEN_HEIGHT:
+                self.y_scroll += 2
 
     ################################################################################################
     # Render Level
@@ -40,6 +80,8 @@ class GameLevel(Level):
                 coords = (x * 16 - self.x_scroll, y * 16 - self.y_scroll)
                 # Draw Tile
                 screen.blit(self.get_tile(x, y).sprite, coords)
+
+        super().draw(screen)
 
     ################################################################################################
     # Get tile at coordinate x, y

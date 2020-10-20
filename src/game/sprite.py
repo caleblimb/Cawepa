@@ -3,6 +3,19 @@ This module is used to pull individual sprites from sprite sheets.
 '''
 import pygame
 
+class Sprite():
+    image = None
+    width = 0
+    height = 0
+
+    def __init__(self, image, width, height):
+        self.image = image
+        self.width = 0
+        self.height = 0
+
+    def draw(self, screen, x, y):
+        screen.blit(self.image, (x, y))
+
 class SpriteSheet(object):
     """ Class used to grab images out of a sprite sheet. """
     # This points to our sprite sheet image
