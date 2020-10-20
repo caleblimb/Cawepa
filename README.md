@@ -8,6 +8,9 @@ This is a simple 2d game.
 ## Install pip
 https://pip.pypa.io/en/stable/installing/
 
+## Pylint was used for checking code
+* [Pylint 2.6.0](https://pypi.org/project/pylint/)
+
 ## Packages
 * Install [pygame 2.0](https://pypi.org/project/pygame/2.0.0.dev12/) using the console
 ```

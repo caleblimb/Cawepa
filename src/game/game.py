@@ -1,9 +1,12 @@
+'''
+These are values that can be accesded by anywhere in the code.
+'''
 #Global Variables
 SCREEN_WIDTH = 400
 SCREEN_HEIGHT = 300
 
 #Input Values
-input_left = False
-input_right = False
-input_up = False
-input_down = False
+INPUT_LEFT = False
+INPUT_RIGHT = False
+INPUT_UP = False
+INPUT_DOWN = False

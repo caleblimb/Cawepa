@@ -1,16 +1,17 @@
+#pylint: disable=F0401
 '''
 Execute this file to run the game. This file is where all of the code for the project is called.
 '''
 # Import Pygame
 import pygame
-from pygame.locals import *
+#from pygame.locals import *
+
+# Import local modules
+from game import game
+from level.level import Level
 
 # Initialize pygame module
 pygame.init()
-
-# Import other files
-from game import game
-from level.level import Level
 
 ####################################################################################################
 # Game Loop
@@ -49,24 +50,24 @@ def run():
             # Check if keys are pressed
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
-                    game.input_up = True
+                    game.INPUT_UP = True
                 if event.key == pygame.K_RIGHT:
-                    game.input_right = True
+                    game.INPUT_RIGHT = True
                 if event.key == pygame.K_DOWN:
-                    game.input_down = True
+                    game.INPUT_DOWN = True
                 if event.key == pygame.K_LEFT:
-                    game.input_left = True
+                    game.INPUT_LEFT = True
 
             # Check if keys are released
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_UP:
-                    game.input_up = False
+                    game.INPUT_UP = False
                 if event.key == pygame.K_RIGHT:
-                    game.input_right = False
+                    game.INPUT_RIGHT = False
                 if event.key == pygame.K_DOWN:
-                    game.input_down = False
+                    game.INPUT_DOWN= False
                 if event.key == pygame.K_LEFT:
-                    game.input_left = False
+                    game.INPUT_LEFT = False
 
         # Update the current level
         update(current_level)
