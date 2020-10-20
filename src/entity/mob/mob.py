@@ -43,6 +43,8 @@ class Mob(Entity):
                 if (not self.tile_collision(tile_map, tiles, width, height, int(xa), self.one(ya))):
                     self.y += ya
                 ya = 0
+            
+        self.tred = self.tile_depth(tile_map, tiles, width, height)
 
     ################################################################################################
     # Make value equal 1 or -1

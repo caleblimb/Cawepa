@@ -78,7 +78,7 @@ class Entity():
         y0 = int((self.collision_mask.y) / 16)
         y1 = int((self.collision_mask.y + self.collision_mask.height) / 16)
 
-        return (self.get_tile(tile_map, tiles, width, height, x0, y0).tred + \
-                self.get_tile(tile_map, tiles, width, height, x1, y0).tred + \
-                self.get_tile(tile_map, tiles, width, height, x0, y1).tred + \
-                self.get_tile(tile_map, tiles, width, height, x1, y1).tred) / 4
+        return (self.get_tile(tile_map, tiles, width, height, x0, y0).depth + \
+                self.get_tile(tile_map, tiles, width, height, x1, y0).depth + \
+                self.get_tile(tile_map, tiles, width, height, x0, y1).depth + \
+                self.get_tile(tile_map, tiles, width, height, x1, y1).depth) / 4

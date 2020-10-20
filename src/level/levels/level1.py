@@ -16,7 +16,7 @@ class Level1(GameLevel):
         #Call Level constructor
         super().__init__()
 
-        self.tile_map = self.load_level("res/levels/test_level")
+        self.tile_map = self.load_level("res/levels/test_level.csv")
 
         tile_type_width = 5
         tile_type_height = 176
@@ -27,9 +27,22 @@ class Level1(GameLevel):
             for x in range(0, tile_type_width):
                 tile = Tile(tile_sheet.get_image(x * 16, y * 16, 16, 16))
                 
+                if y <= 5:
+                    tile.depth = 2
+
+                if y == 0:
+                    if x == 0:
+                        tile.depth = 10
+                    if x == 1:
+                        tile.depth = 8
+                if y == 1 and x == 3:
+                    tile.depth = 8
+
+                if y == 4 and x == 3:
+                    tile.depth = 4
 
                 if y >= 141 and y < 152:
-                    tile.depth = 4
+                    tile.depth = 2
                 if y >= 152:
                     tile.solid = True
 
