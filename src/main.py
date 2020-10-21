@@ -29,6 +29,7 @@ def draw(screen, level):
     # Clear Screen
     screen.fill((0, 0, 0))
     level.draw(screen)
+    screen.blit(game.MOUSE_CURSOR, (game.MOUSE_X, game.MOUSE_Y))
     pygame.display.update()
 
 ####################################################################################################
@@ -53,6 +54,10 @@ def main():
     icon = pygame.image.load('res/graphics/icon.png')
     pygame.display.set_icon(icon)
 
+    # Set Mouse Properties
+    game.MOUSE_CURSOR = game.CURSOR_GAUNTLET
+    pygame.mouse.set_visible(False)
+
     # Set which level to start the game on, we'll change this to a menu screen later.
     current_level = Level1()
 
@@ -65,27 +70,30 @@ def main():
                 running = False
             # Check if keys are pressed
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_UP:
+                if event.key == pygame.K_UP or event.key == pygame.K_w:
                     game.INPUT_UP = True
-                if event.key == pygame.K_RIGHT:
+                if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
                     game.INPUT_RIGHT = True
-                if event.key == pygame.K_DOWN:
+                if event.key == pygame.K_DOWN or event.key == pygame.K_s:
                     game.INPUT_DOWN = True
-                if event.key == pygame.K_LEFT:
+                if event.key == pygame.K_LEFT or event.key == pygame.K_a:
                     game.INPUT_LEFT = True
 
             # Check if keys are released
             if event.type == pygame.KEYUP:
-                if event.key == pygame.K_UP:
+                if event.key == pygame.K_UP or event.key == pygame.K_w:
                     game.INPUT_UP = False
-                if event.key == pygame.K_RIGHT:
+                if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
                     game.INPUT_RIGHT = False
-                if event.key == pygame.K_DOWN:
+                if event.key == pygame.K_DOWN or event.key == pygame.K_s:
                     game.INPUT_DOWN= False
-                if event.key == pygame.K_LEFT:
+                if event.key == pygame.K_LEFT or event.key == pygame.K_a:
                     game.INPUT_LEFT = False
 
         # Update the current level
+        mouse_pos = pygame.mouse.get_pos()
+        game.MOUSE_X = mouse_pos[0]
+        game.MOUSE_Y = mouse_pos[1]
         update(current_level)
 
         # Draw the current level to Screen

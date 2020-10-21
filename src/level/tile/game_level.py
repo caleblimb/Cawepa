@@ -92,7 +92,7 @@ class GameLevel(Level):
                 coords = (x * 16 - self.x_scroll, y * 16 - self.y_scroll)
                 # Draw Tile
                 screen.blit(self.get_tile(x, y).sprite, coords)
-        
+
         #Parent draw function found in level.py
         super().draw(screen)
 
