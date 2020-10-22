@@ -12,6 +12,7 @@ INPUT_LEFT = False
 INPUT_RIGHT = False
 INPUT_UP = False
 INPUT_DOWN = False
+INPUT_SHIFT = False
 
 # Current Level
 MAIN_MENU = None

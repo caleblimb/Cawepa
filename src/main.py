@@ -85,6 +85,8 @@ def main():
                     game.INPUT_DOWN = True
                 if event.key == pygame.K_LEFT or event.key == pygame.K_a:
                     game.INPUT_LEFT = True
+                if event.key == pygame.K_LSHIFT:
+                    game.INPUT_SHIFT = True
 
             # Check if keys are released
             if event.type == pygame.KEYUP:
@@ -96,6 +98,8 @@ def main():
                     game.INPUT_DOWN= False
                 if event.key == pygame.K_LEFT or event.key == pygame.K_a:
                     game.INPUT_LEFT = False
+                if event.key == pygame.K_LSHIFT:
+                    game.INPUT_SHIFT = False
 
             # Check if Mouse Buttons are pressed
             if event.type == pygame.MOUSEBUTTONDOWN:

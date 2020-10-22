@@ -6,6 +6,7 @@ from enum import Enum
 import pygame
 from game import game
 from game.sprite import SpriteSheet, Sprite
+from menu.hud import HUD
 from .mob import Mob
 from ..collision_mask import CollisionMask
 
@@ -36,16 +37,33 @@ class Player(Mob):
     def __init__(self, x, y):
         super().__init__(x, y)
 
+        # Create HUD
+        self.hud = HUD()
+
+        # Set max levels
+        self.max_health = 100.0
+        self.max_stamina = 100.0
+        self.max_mana = 100.0
+
+        # Set levels
+        self.health = 100.0
+        self.stamina = 100.0
+        self.mana = 100.0
+
         # Create Player spritesheet
         pygame.sprite.Sprite.__init__(self)
         sprite_sheet = SpriteSheet("res/graphics/player.png")
 
         # Add each direction of the walking animation
         for frame in range (0, self.frame_count):
-            self.sprite_up   .append(Sprite(sprite_sheet.get_image(32 * frame, 32 * 0, 32, 32), 32, 32))
-            self.sprite_right.append(Sprite(sprite_sheet.get_image(32 * frame, 32 * 1, 32, 32), 32, 32))
-            self.sprite_down .append(Sprite(sprite_sheet.get_image(32 * frame, 32 * 2, 32, 32), 32, 32))
-            self.sprite_left .append(Sprite(sprite_sheet.get_image(32 * frame, 32 * 3, 32, 32), 32, 32))
+            self.sprite_up   .append(Sprite( \
+                sprite_sheet.get_image(32 * frame, 32 * 0, 32, 32), 32, 32))
+            self.sprite_right.append(Sprite( \
+                sprite_sheet.get_image(32 * frame, 32 * 1, 32, 32), 32, 32))
+            self.sprite_down .append(Sprite( \
+                sprite_sheet.get_image(32 * frame, 32 * 2, 32, 32), 32, 32))
+            self.sprite_left .append(Sprite( \
+                sprite_sheet.get_image(32 * frame, 32 * 3, 32, 32), 32, 32))
 
         # Starting Sprite
         self.sprite = self.sprite_down[0]
@@ -60,7 +78,17 @@ class Player(Mob):
     def update(self, tile_map, tiles, width, height):
         self.collision_mask.update(self.x, self.y)
         update_frame = False
-        player_speed = 2
+
+        self.hud.health = (self.health * 100) // self.max_health
+        self.hud.stamina = (self.stamina * 100) // self.max_stamina
+        self.hud.mana = (self.mana * 100) // self.max_mana
+
+
+        player_speed = 1
+        movement_cost = 0.01
+        if game.INPUT_SHIFT and self.stamina > 4:
+            player_speed = 2
+            movement_cost = 0.02
 
         # Ammount to move
         xa = 0
@@ -86,6 +114,7 @@ class Player(Mob):
 
         # Update player position
         self.move(tile_map, tiles, width, height, xa, ya)
+        self.stamina -= (abs(xa) + abs(ya)) * movement_cost
 
         if update_frame:
             # Update animation frame
@@ -102,3 +131,14 @@ class Player(Mob):
                 self.sprite = self.sprite_down[int(self.frame)]
             if self.direction == Player.Direction.LEFT:
                 self.sprite = self.sprite_left[int(self.frame)]
+
+        if self.stamina < self.max_stamina:
+            self.stamina += 0.01
+        if self.health < self.max_health:
+            self.health += 0.01
+        if self.mana < self.max_mana:
+            self.mana += 0.01
+
+    def draw(self, screen, x_offset, y_offset):
+        super().draw(screen, x_offset, y_offset)
+        self.hud.draw(screen)
