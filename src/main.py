@@ -9,6 +9,10 @@ import pygame
 # Import local modules
 from game import game
 from level.levels.level1 import Level1
+from menu.main_menu import MainMenu
+from menu.online_menu import OnlineMenu
+from menu.credits_menu import CreditsMenu
+from menu.options_menu import OptionsMenu
 
 # Initialize pygame module
 pygame.init()
@@ -27,7 +31,7 @@ def update(level):
 def draw(screen, level):
     ''' This draws everything '''
     # Clear Screen
-    screen.fill((0, 0, 0))
+    screen.fill((150, 100, 150))
     level.draw(screen)
     screen.blit(game.MOUSE_CURSOR, (game.MOUSE_X, game.MOUSE_Y))
     pygame.display.update()
@@ -59,7 +63,8 @@ def main():
     pygame.mouse.set_visible(False)
 
     # Set which level to start the game on, we'll change this to a menu screen later.
-    current_level = Level1()
+    game.MAIN_MENU = MainMenu()
+    current_level = game.MAIN_MENU
 
     # Game Loop
     while running:
@@ -90,10 +95,41 @@ def main():
                 if event.key == pygame.K_LEFT or event.key == pygame.K_a:
                     game.INPUT_LEFT = False
 
+            # Check if Mouse Buttons are pressed
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == pygame.BUTTON_LEFT:
+                    game.MOUSE_LEFT = True
+                if event.button == pygame.BUTTON_RIGHT:
+                    game.MOUSE_RIGHT = True
+
+            # Check if Mouse Buttons are released
+            if event.type == pygame.MOUSEBUTTONUP:
+                if event.button == pygame.BUTTON_LEFT:
+                    game.MOUSE_LEFT = False
+                if event.button == pygame.BUTTON_RIGHT:
+                    game.MOUSE_RIGHT = True
+
         # Update the current level
         mouse_pos = pygame.mouse.get_pos()
         game.MOUSE_X = mouse_pos[0]
         game.MOUSE_Y = mouse_pos[1]
+
+
+        # Check Level
+        if game.CHANGE_LEVEL:
+            if game.CHANGE_LEVEL == "LEVEL_TEST":
+                current_level = Level1()
+            if game.CHANGE_LEVEL == "MENU_MAIN":
+                current_level = MainMenu()
+            if game.CHANGE_LEVEL == "MENU_ONLINE":
+                current_level = OnlineMenu()
+            if game.CHANGE_LEVEL == "MENU_OPTIONS":
+                current_level = OptionsMenu()
+            if game.CHANGE_LEVEL == "MENU_CREDITS":
+                current_level = CreditsMenu()
+
+            game.CHANGE_LEVEL = None
+            
         update(current_level)
 
         # Draw the current level to Screen
