@@ -4,6 +4,7 @@ This handles Tile-based levels
 '''
 from game import game
 from entity.mob.player import Player
+from entity.mob.mob import Mob
 from ..level import Level
 
 class GameLevel(Level):
@@ -31,7 +32,11 @@ class GameLevel(Level):
     def update(self):
         ''' This loops through every element of the level and calls it's update function. '''
         for entity in self.entities:
-            entity.update(self.tile_map, self.tiles, self.width, self.height)
+            entity.update(self.tile_map, self.tiles, self.width, self.height, self.x_scroll, self.y_scroll)
+            if isinstance(entity, Mob):
+                if entity.projectile:
+                    self.entities.append(entity.projectile)
+                    entity.projectile = None
             if isinstance(entity, Player):
                 self.scroll_follow(entity.x, entity.y)
 

@@ -25,6 +25,10 @@ class Sprite():
             It is used for drawing things that are partially underwater or in tall grass '''
         screen.blit(self.image, (x,y), (0, 0, self.width, self.height - w))
 
+    def rot_center(self, angle):
+        ''' rotate an image while keeping its center '''
+        self.image = pygame.transform.rotate(self.image, angle)
+
 class SpriteSheet():
     ''' Class used to grab images out of a sprite sheet. '''
     # This points to our sprite sheet image

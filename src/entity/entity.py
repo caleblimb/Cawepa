@@ -18,7 +18,7 @@ class Entity():
     ################################################################################################
     # Update Entity
     ################################################################################################
-    def update(self, tile_map, tiles, width, height):
+    def update(self, tile_map, tiles, width, height, x_offset, y_offset):
         ''' This method is necessary as a placeholder for child classes '''
 
     ################################################################################################

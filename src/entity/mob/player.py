@@ -4,11 +4,14 @@ This hadles the user controlled Player
 '''
 from enum import Enum
 import pygame
+import math
 from game import game
 from game.sprite import SpriteSheet, Sprite
 from menu.hud import HUD
 from .mob import Mob
 from ..collision_mask import CollisionMask
+from ..projectile.fire_ball import Fireball
+
 
 class Player(Mob):
     ''' Defines universal characteristics for all Mobs ie Players, Monsters, NPCs... '''
@@ -50,6 +53,9 @@ class Player(Mob):
         self.stamina = 100.0
         self.mana = 100.0
 
+        # Spell Cooldown
+        self.cooldown = 60
+
         # Create Player spritesheet
         pygame.sprite.Sprite.__init__(self)
         sprite_sheet = SpriteSheet("res/graphics/player.png")
@@ -75,14 +81,34 @@ class Player(Mob):
         self.sprite_x_offset = 16
         self.sprite_y_offset = 25
 
-    def update(self, tile_map, tiles, width, height):
-        self.collision_mask.update(self.x, self.y)
-        update_frame = False
-
+    def update(self, tile_map, tiles, width, height, x_offset, y_offset):
         self.hud.health = (self.health * 100) // self.max_health
         self.hud.stamina = (self.stamina * 100) // self.max_stamina
         self.hud.mana = (self.mana * 100) // self.max_mana
 
+
+        mouse_direction = math.atan2(game.MOUSE_X - (self.x - x_offset), game.MOUSE_Y - (self.y - y_offset))
+
+        if self.cooldown > 0:
+            self.cooldown -= 1
+        if self.cooldown <= 0:
+            if game.MOUSE_LEFT and self.mana >= 10:
+                self.projectile = Fireball(self.x, self.y, 2 * math.sin(mouse_direction), 2 * math.cos(mouse_direction))
+                self.cooldown = 60
+                self.mana -= 10
+
+        self.collision_mask.update(self.x, self.y)
+        self.check_movement(tile_map, tiles, width, height)
+
+        if self.stamina < self.max_stamina:
+            self.stamina += 0.01
+        if self.health < self.max_health:
+            self.health += 0.01
+        if self.mana < self.max_mana:
+            self.mana += 0.01
+
+    def check_movement(self, tile_map, tiles, width, height):
+        update_frame = False
 
         player_speed = 1
         movement_cost = 0.01
@@ -132,12 +158,7 @@ class Player(Mob):
             if self.direction == Player.Direction.LEFT:
                 self.sprite = self.sprite_left[int(self.frame)]
 
-        if self.stamina < self.max_stamina:
-            self.stamina += 0.01
-        if self.health < self.max_health:
-            self.health += 0.01
-        if self.mana < self.max_mana:
-            self.mana += 0.01
+
 
     def draw(self, screen, x_offset, y_offset):
         super().draw(screen, x_offset, y_offset)

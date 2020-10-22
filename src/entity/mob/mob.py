@@ -10,6 +10,7 @@ class Mob(Entity):
     '''
     # This defines how deep the Mob is and aids with drawing underwater and such.
     tred = 0
+    projectile = None
 
     def __init__(self, x, y):
         super().__init__(x, y)
@@ -68,7 +69,7 @@ class Mob(Entity):
     ################################################################################################
     # Update Mob
     ################################################################################################
-    def update(self, tile_map, tiles, width, height):
+    def update(self, tile_map, tiles, width, height, x_offset, y_offset):
         pass
 
     ################################################################################################
