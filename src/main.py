@@ -1,4 +1,6 @@
 #pylint: disable=F0401
+#pylint: disable=R0912
+#pylint: disable=R0915
 '''
 Execute this file to run the game. This file is where all of the code for the project is called.
 '''
@@ -59,7 +61,7 @@ def main():
     pygame.display.set_icon(icon)
 
     # Set Mouse Properties
-    game.MOUSE_CURSOR = game.CURSOR_GAUNTLET
+    game.MOUSE_CURSOR = game.CURSOR_ARROW
     pygame.mouse.set_visible(False)
 
     # Set which level to start the game on, we'll change this to a menu screen later.
@@ -114,8 +116,7 @@ def main():
         game.MOUSE_X = mouse_pos[0]
         game.MOUSE_Y = mouse_pos[1]
 
-
-        # Check Level
+        # Check Level and update it if needed
         if game.CHANGE_LEVEL:
             if game.CHANGE_LEVEL == "LEVEL_TEST":
                 current_level = Level1()
@@ -128,11 +129,15 @@ def main():
             if game.CHANGE_LEVEL == "MENU_CREDITS":
                 current_level = CreditsMenu()
 
+            # Reset the change level request variable
             game.CHANGE_LEVEL = None
-            
+
+        # Update the current level
+        # When online play is added this will update more than just the current level
         update(current_level)
 
         # Draw the current level to Screen
+        # This will only ever draw the current level
         draw(screen, current_level)
 
         #Pygame - 60 updates/ticks per second

@@ -21,7 +21,7 @@ TEST_LEVEL = None
 CHANGE_LEVEL = None
 
 #Mouse properties
-CURSOR_GAUNTLET = pygame.image.load('res/graphics/gui/cursor.png')
+CURSOR_ARROW = pygame.image.load('res/graphics/gui/cursor.png')
 MOUSE_CURSOR = None
 
 MOUSE_LEFT = False
