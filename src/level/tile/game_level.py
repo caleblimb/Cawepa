@@ -46,32 +46,28 @@ class GameLevel(Level):
         # Check each of the 4 sides of the screen
 
         # If on left of screen
-        if x - self.x_scroll < camera_border:
-            # Make sure the camera isn't already at the edge of the level
-            if self.x_scroll > 0:
-                # Move the camera left
-                self.x_scroll -= 2
+        # Make sure the camera isn't already at the edge of the level
+        while x - self.x_scroll < camera_border and self.x_scroll > 0:
+            # Move the camera left
+                self.x_scroll -= 1
 
         # If on right of screen
-        if x - self.x_scroll > -camera_border + game.SCREEN_WIDTH:
-            # Make sure the camera isn't already at the edge of the level
-            if self.x_scroll < self.width * 16 - game.SCREEN_WIDTH:
-                # Move the camera right
-                self.x_scroll += 2
+        # Make sure the camera isn't already at the edge of the level
+        while x - self.x_scroll > -camera_border + game.SCREEN_WIDTH and self.x_scroll < self.width * 16 - game.SCREEN_WIDTH:
+            # Move the camera right
+            self.x_scroll += 1
 
         # If on top of screen
-        if y - self.y_scroll < camera_border:
-            # Make sure the camera isn't already at the edge of the level
-            if self.y_scroll > 0:
+        # Make sure the camera isn't already at the edge of the level
+        while y - self.y_scroll < camera_border and self.y_scroll > 0:
                 # Move the camera up
-                self.y_scroll -= 2
+                self.y_scroll -= 1
 
         # If on bottom of screen
-        if y - self.y_scroll > -camera_border + game.SCREEN_HEIGHT:
-            # Make sure the camera isn't already at the edge of the level
-            if self.y_scroll < self.height * 16 - game.SCREEN_HEIGHT:
+        # Make sure the camera isn't already at the edge of the level
+        while y - self.y_scroll > -camera_border + game.SCREEN_HEIGHT and self.y_scroll < self.height * 16 - game.SCREEN_HEIGHT:
                 # Move the camera down
-                self.y_scroll += 2
+                self.y_scroll += 1
 
     ################################################################################################
     # Render Level

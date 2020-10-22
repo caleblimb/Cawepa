@@ -132,6 +132,8 @@ def main():
                 current_level = OptionsMenu()
             if game.CHANGE_LEVEL == "MENU_CREDITS":
                 current_level = CreditsMenu()
+            if game.CHANGE_LEVEL == "QUIT":
+                running = False
 
             # Reset the change level request variable
             game.CHANGE_LEVEL = None

@@ -2,66 +2,67 @@
 '''
 This is the Main Menu and is the first screen seen when the game is launched.
 '''
-import pygame
 from game import game
-from game.sprite import SpriteSheet
 
-from level.level import Level
+from menu.menu import Menu
 from .component.button import Button
 from .component.label import Label
 
 ####################################################################################################
 # Main Menu
 ####################################################################################################
-class MainMenu(Level):
+class MainMenu(Menu):
     ''' Define the characteristics of the main menu '''
     def __init__(self):
-        # Create Button spritesheet
-        pygame.sprite.Sprite.__init__(self)
-        sprite_sheet = SpriteSheet("res/graphics/gui/menu_button.png")
-        sprite_button_idle = sprite_sheet.get_image(0, 0, 100, 18)
-        sprite_button_hover = sprite_sheet.get_image(0, 18, 100, 18)
-        sprite_button_press = sprite_sheet.get_image(0, 36, 100, 18)
-
-        # Menu title
-        self.title = Label(0, 0, game.SCREEN_WIDTH, 100, 64, "Cawepa")
+        super().__init__("Cawepa", False)
 
         # Position for buttons in center of screen
         x = game.SCREEN_WIDTH / 2 - 50
 
-        # Size of buttons
-        width = 100
-        height = 18
-
         # Play a single player game
         y = game.SCREEN_HEIGHT / 2 - 40
-        self.button_single_player = Button(x, y, width, height, \
-                                    sprite_button_idle, sprite_button_hover, sprite_button_press)
-        self.button_single_player.label = Label(x, y, width, height, 14, "Single Player")
+        self.button_single_player = Button(x, y, self.button_width, self.button_height, \
+                                           self.sprite_button_idle, \
+                                           self.sprite_button_hover, \
+                                           self.sprite_button_press)
+
+        self.button_single_player.label = Label(x, y, self.button_width, self.button_height, 14, \
+                                                "Single Player")
 
         # Play an online game
         y = game.SCREEN_HEIGHT / 2 - 19
-        self.button_online = Button(x, y, width, height, \
-                             sprite_button_idle, sprite_button_hover, sprite_button_press)
-        self.button_online.label = Label(x, y, width, height, 14, "Play Online")
+        self.button_online = Button(x, y, self.button_width, self.button_height, \
+                                    self.sprite_button_idle, \
+                                    self.sprite_button_hover, \
+                                    self.sprite_button_press)
+        self.button_online.label = Label(x, y, self.button_width, self.button_height, 14, \
+                                         "Play Online")
         
         # Go to options menu
         y = game.SCREEN_HEIGHT / 2 + 1
-        self.button_options = Button(x, y, width, height, \
-                              sprite_button_idle, sprite_button_hover, sprite_button_press)
-        self.button_options.label = Label(x, y, width, height, 14, "Options")
+        self.button_options = Button(x, y, self.button_width, self.button_height, \
+                                     self.sprite_button_idle, \
+                                     self.sprite_button_hover, \
+                                     self.sprite_button_press)
+        self.button_options.label = Label(x, y, self.button_width, self.button_height, 14, \
+                                          "Options")
 
         # Creddits button
         y = game.SCREEN_HEIGHT / 2 + 22
-        self.button_credits = Button(x, y, width, height, \
-                              sprite_button_idle, sprite_button_hover, sprite_button_press)
-        self.button_credits.label = Label(x, y, width, height, 14, "Credits")
+        self.button_credits = Button(x, y, self.button_width, self.button_height, \
+                                     self.sprite_button_idle, \
+                                     self.sprite_button_hover, \
+                                     self.sprite_button_press)
+
+        self.button_credits.label = Label(x, y, self.button_width, self.button_height, 14, \
+                                          "Credits")
 
     ################################################################################################
     # Update Menu
     ################################################################################################
     def update(self):
         ''' Update menu components '''
+        super().update()
         # Start Single-Player Game
         self.button_single_player.update()
         if self.button_single_player.action_event > 0:
@@ -91,7 +92,7 @@ class MainMenu(Level):
     ################################################################################################
     def draw(self, screen):
         ''' Draw menu components '''
-        self.title.draw(screen)
+        super().draw(screen)
         self.button_single_player.draw(screen)
         self.button_online.draw(screen)
         self.button_options.draw(screen)

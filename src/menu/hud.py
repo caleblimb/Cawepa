@@ -7,8 +7,8 @@ from game.sprite import SpriteSheet
 
 class HUD():
     def __init__(self):
-        self.x = 8
-        self.y = 8
+        self.x = 6
+        self.y = 6
 
         self.total_health = 51
         self.total_stamina = 51
