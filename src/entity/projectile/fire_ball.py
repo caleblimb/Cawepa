@@ -15,8 +15,9 @@ class Fireball(Projectile):
         sprite_sheet = SpriteSheet("res/graphics/projectiles/fireball.png")
 
         self.sprite_frame = [Sprite(sprite_sheet.get_image(0, 0, 10, 5), 10, 10), Sprite(sprite_sheet.get_image(0, 5, 10, 5), 10, 10)]
+        self.sprite_x_offset = 5
+        self.sprite_y_offset = 5
 
-        print(self.direction)
         self.sprite_frame[0].rot_center(self.direction)
         self.sprite_frame[1].rot_center(self.direction)
 
