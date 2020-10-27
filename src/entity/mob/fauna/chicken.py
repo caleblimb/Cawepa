@@ -15,6 +15,13 @@ from ...projectile.fire_ball import Fireball
 
 
 class Chicken(Mob):
+    class Direction(Enum):
+        ''' Direction player is facing '''
+        UP = 0
+        RIGHT = 1
+        DOWN = 2
+        LEFT = 3
+
     # Arrays of sprites for animations
     sprite_up = []
     sprite_right = []
