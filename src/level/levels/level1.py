@@ -3,8 +3,10 @@
 Test Level
 '''
 import pygame
+import random
 from game.sprite import SpriteSheet
 from entity.mob.player import Player
+from entity.mob.fauna.chicken import Chicken
 from ..tile.game_level import GameLevel
 from ..tile.tile import Tile
 
@@ -62,3 +64,7 @@ class Level1(GameLevel):
 
         # Add Player to Level
         self.entities.append(Player(500, 500))
+
+        print(self.width)
+        for _ in range(100):
+            self.entities.append(Chicken(random.randint(30 * 16, 98 * 16), random.randint(30 * 16, 98 * 16)))

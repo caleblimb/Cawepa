@@ -3,6 +3,7 @@
 This handles Tile-based levels
 '''
 from game import game
+from entity.mob.fauna.chicken import Chicken
 from entity.mob.player import Player
 from entity.mob.mob import Mob
 from ..level import Level
@@ -39,6 +40,7 @@ class GameLevel(Level):
                     entity.projectile = None
             if isinstance(entity, Player):
                 self.scroll_follow(entity.x, entity.y)
+
 
     ################################################################################################
     # Move Camera towards x, y Positon
