@@ -2,15 +2,23 @@
 '''
 This handles everything that every creature has in common including the player
 '''
+from enum import Enum
 from ..entity import Entity
 
 class Mob(Entity):
     '''
     Defines universal characteristics for all Mobs ie Players, Monsters, NPCs...
     '''
+    class Direction(Enum):
+        ''' Direction player is facing '''
+        UP = 0
+        RIGHT = 1
+        DOWN = 2
+        LEFT = 3
     # This defines how deep the Mob is and aids with drawing underwater and such.
     tred = 0
     projectile = None
+    direction = None
 
     def __init__(self, x, y):
         super().__init__(x, y)
@@ -18,14 +26,26 @@ class Mob(Entity):
     ################################################################################################
     # Move Mob to new position
     ################################################################################################
-    def move (self, tile_map, xa, ya):
+    def move (self, tile_map, xa, ya, update_direction = True):
         ''' This handles the movement of mobs. It handles each direction separately so that if
             it tries moving up against a wall, it can still slide along the surface instead of
             getting stuck. '''
+
+        if update_direction:
+            if abs(xa) > abs(ya):
+                if xa > 0:
+                    self.direction = Mob.Direction.RIGHT
+                else:
+                    self.direction = Mob.Direction.LEFT
+            else:
+                if ya >= 0:
+                    self.direction = Mob.Direction.DOWN
+                else:
+                    self.direction = Mob.Direction.UP
         # Move one direction at a time
         if (xa != 0 and ya != 0):
-            self.move(tile_map, xa, 0)
-            self.move(tile_map, 0, ya)
+            self.move(tile_map, xa, 0, False)
+            self.move(tile_map, 0, ya, False)
             return
 
         # Move horizontally

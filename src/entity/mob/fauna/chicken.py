@@ -15,13 +15,6 @@ from ...projectile.fire_ball import Fireball
 
 
 class Chicken(Mob):
-    class Direction(Enum):
-        ''' Direction player is facing '''
-        UP = 0
-        RIGHT = 1
-        DOWN = 2
-        LEFT = 3
-
     # Arrays of sprites for animations
     sprite_up = []
     sprite_right = []
@@ -35,7 +28,7 @@ class Chicken(Mob):
     frame_count = 8
 
     # Starting direction
-    direction = Direction.DOWN
+    direction = Mob.Direction.DOWN
 
 
     def __init__(self, x, y):
@@ -92,17 +85,6 @@ class Chicken(Mob):
             if self.state == 3:
                 self.xa = math.cos(direction)
                 self.ya = math.sin(direction)
-            if self.xa != 0 or self.ya != 0:
-                if abs(self.xa) >= abs(self.ya):
-                    if self.xa > 0:
-                        self.direction = Chicken.Direction.RIGHT
-                    else:
-                        self.direction = Chicken.Direction.LEFT
-                else:
-                    if self.ya > 0:
-                        self.direction = Chicken.Direction.DOWN
-                    else:
-                        self.direction = Chicken.Direction.UP
 
         ## 0 = Idle, 1 = Eating, 2 = Walking, 3 = Running
         if self.state == 0:
@@ -116,7 +98,6 @@ class Chicken(Mob):
 
         if self.state == 3:
             self.frame = 3 + (self.action_counter // 5) % 3
-
 
         # Regenerate Health
         if self.health < self.max_health:

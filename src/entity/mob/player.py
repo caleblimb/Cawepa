@@ -122,19 +122,15 @@ class Player(Mob):
         # Check for player input to move the player
         if game.INPUT_RIGHT:
             xa += player_speed
-            self.direction = Player.Direction.RIGHT
             update_frame = True
         if game.INPUT_LEFT:
             xa -= player_speed
-            self.direction = Player.Direction.LEFT
             update_frame = True
         if game.INPUT_UP:
             ya -= player_speed
-            self.direction = Player.Direction.UP
             update_frame = True
         if game.INPUT_DOWN:
             ya += player_speed
-            self.direction = Player.Direction.DOWN
             update_frame = True
 
         # Update player position
@@ -148,13 +144,13 @@ class Player(Mob):
                 self.frame -= self.frame_count
 
             # Update player direction
-            if self.direction == Player.Direction.UP:
+            if self.direction == Mob.Direction.UP:
                 self.sprite = self.sprite_up[int(self.frame)]
-            if self.direction == Player.Direction.RIGHT:
+            if self.direction == Mob.Direction.RIGHT:
                 self.sprite = self.sprite_right[int(self.frame)]
-            if self.direction == Player.Direction.DOWN:
+            if self.direction == Mob.Direction.DOWN:
                 self.sprite = self.sprite_down[int(self.frame)]
-            if self.direction == Player.Direction.LEFT:
+            if self.direction == Mob.Direction.LEFT:
                 self.sprite = self.sprite_left[int(self.frame)]
 
 
