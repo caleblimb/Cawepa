@@ -7,19 +7,11 @@ from entity.mob.fauna.chicken import Chicken
 from entity.mob.player import Player
 from entity.mob.mob import Mob
 from ..level import Level
+from .tile import TileMap
 
 class GameLevel(Level):
     ''' Tile Based Level '''
-    # Define tile_map dimenstions
-    width = 0
-    height = 0
-
-    # Tile types for level
-    tiles = []
-
-    # Tile map for level
-    tile_map = []
-
+    tile_map = None
     ################################################################################################
     # Initialize Level
     ################################################################################################
@@ -33,7 +25,7 @@ class GameLevel(Level):
     def update(self):
         ''' This loops through every element of the level and calls it's update function. '''
         for entity in self.entities:
-            entity.update(self.tile_map, self.tiles, self.width, self.height, self.x_scroll, self.y_scroll)
+            entity.update(self.tile_map, self.x_scroll, self.y_scroll)
             if isinstance(entity, Mob):
                 if entity.projectile:
                     self.entities.append(entity.projectile)
@@ -60,7 +52,7 @@ class GameLevel(Level):
 
         # If on right of screen
         # Make sure the camera isn't already at the edge of the level
-        while x - self.x_scroll > -camera_border + game.SCREEN_WIDTH and self.x_scroll < self.width * 16 - game.SCREEN_WIDTH:
+        while x - self.x_scroll > -camera_border + game.SCREEN_WIDTH and self.x_scroll < self.tile_map.width * 16 - game.SCREEN_WIDTH:
             # Move the camera right
             self.x_scroll += 1
 
@@ -72,7 +64,7 @@ class GameLevel(Level):
 
         # If on bottom of screen
         # Make sure the camera isn't already at the edge of the level
-        while y - self.y_scroll > -camera_border + game.SCREEN_HEIGHT and self.y_scroll < self.height * 16 - game.SCREEN_HEIGHT:
+        while y - self.y_scroll > -camera_border + game.SCREEN_HEIGHT and self.y_scroll < self.tile_map.height * 16 - game.SCREEN_HEIGHT:
                 # Move the camera down
                 self.y_scroll += 1
 
@@ -88,63 +80,25 @@ class GameLevel(Level):
         y0 = int((self.y_scroll - 16) / 16)
         y1 = int((self.y_scroll + game.SCREEN_HEIGHT + 16) / 16)
 
+        self.drawTiles(screen, self.tile_map.tile_layer_0,  x0, x1, y0, y1)
+        self.drawTiles(screen, self.tile_map.tile_layer_1,  x0, x1, y0, y1)
+
+        ''' This loops through every element of the level and calls it's draw function. '''
+        self.entities.sort(key=lambda Entity: Entity.y, reverse=False)
+        for entity in self.entities:
+            if - 32 < entity.y - self.y_scroll < game.SCREEN_HEIGHT + 32 and - 32 < entity.x - self.x_scroll < game.SCREEN_WIDTH + 32:
+                entity.draw(screen, self.x_scroll, self.y_scroll)
+
+        self.drawTiles(screen, self.tile_map.tile_layer_2,  x0, x1, y0, y1)
+                
+    def drawTiles(self, screen, tile_layer, x0, x1, y0, y1):
         #Loop through tile_map
         for y in range (y0, y1):
             for x in range (x0, x1):
                 # Location on screen
                 coords = (x * 16 - self.x_scroll, y * 16 - self.y_scroll)
                 # Draw Tile
-                screen.blit(self.get_tile(x, y).sprite, coords)
+                tile_sprite = self.tile_map.get_sprite(tile_layer, x, y)
+                if tile_sprite:
+                    screen.blit(tile_sprite, coords)
 
-        #Parent draw function found in level.py
-        super().draw(screen)
-
-    ################################################################################################
-    # Get tile at coordinate x, y
-    ################################################################################################
-    def get_tile(self, x, y):
-        ''' Takes a tile coordinate and returns the type of tile at that location. '''
-        # Check if the coordinate is outside of the level
-        if (x < 0 or y < 0 or x >= self.width or y >= self.height or len(self.tile_map) == 0 or\
-                len(self.tiles) == 0):
-            return self.tiles[0]
-        try:
-            # Return the tile_type at the specified location
-            return self.tiles[int(self.tile_map[y * self.width + x])]
-        except IndexError:
-            return self.tiles[0]
-
-    ################################################################################################
-    # Loads tile array from file
-    ################################################################################################
-    def load_level(self, file_name):
-        ''' Loads tiles from file format .csv and returns and array of those tiles.
-            It also sets the width and height of the level tile map.
-            Hopefully we'll update this to also load entities using a different file tiype. '''
-
-        # Open file
-        map_file = open(file_name, "r")
-
-        # Create a matrix of rows with each element being a row
-        rows = map_file.readlines()
-
-        # Close file
-        map_file.close()
-
-        # Set map height and width based on the file_data
-        self.height = len(rows)
-        self.width = len(rows[0].split(","))
-
-        # Create tile_map to return
-        tile_map = []
-
-        # Loop through rows
-        for row in rows:
-            # Loop through elements on a row
-            row = row.split(",")
-            for element in row:
-                # Add element to tile_map
-                tile_map.append(element)
-
-        # Return result
-        return tile_map

@@ -13,7 +13,7 @@ class Projectile(Entity):
         self.ya = ya
         self.direction = math.atan2(xa, ya) * (180 / math.pi) - 90
 
-    def update(self, tile_map, tiles, width, height, x_offset, y_offset):
+    def update(self, tile_map, x_offset, y_offset):
         self.x += self.xa
         self.y += self.ya
 

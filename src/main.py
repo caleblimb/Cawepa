@@ -39,7 +39,7 @@ def draw(screen, level):
     pygame.display.update()
 
 def updateInputValue(event):
-    ''' Updates user input values '''
+    ''' Updates user input values'''
     # Check if keys are pressed
     if event.type == pygame.KEYDOWN:
         if event.key == pygame.K_UP or event.key == pygame.K_w:

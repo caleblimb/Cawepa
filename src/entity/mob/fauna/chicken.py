@@ -73,7 +73,7 @@ class Chicken(Mob):
         self.sprite_x_offset = 6
         self.sprite_y_offset = 6
 
-    def update(self, tile_map, tiles, width, height, x_offset, y_offset):
+    def update(self, tile_map, x_offset, y_offset):
 
         self.action_counter -= 1
 
@@ -125,7 +125,7 @@ class Chicken(Mob):
         # Update Collsiion Mask
         self.collision_mask.update(self.x, self.y)
         if self.xa != 0 and self.ya != 0:
-            self.move(tile_map, tiles, width, height, self.xa, self.ya)
+            self.move(tile_map, self.xa, self.ya)
 
         # Update chicken direction
         if self.direction == Chicken.Direction.UP:

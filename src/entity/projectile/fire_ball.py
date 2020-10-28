@@ -27,8 +27,8 @@ class Fireball(Projectile):
         self.current_frame = 0
         self.animation_delay = 10
 
-    def update(self, tile_map, tiles, width, height, x_offset, y_offset):
-        super().update(tile_map, tiles, width, height, x_offset, y_offset)
+    def update(self, tile_map, x_offset, y_offset):
+        super().update(tile_map, x_offset, y_offset)
         self.animation_delay -= 1
         if self.animation_delay <= 0:
             self.animation_delay = 2

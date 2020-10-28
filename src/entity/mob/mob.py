@@ -18,25 +18,25 @@ class Mob(Entity):
     ################################################################################################
     # Move Mob to new position
     ################################################################################################
-    def move (self, tile_map, tiles, width, height, xa, ya):
+    def move (self, tile_map, xa, ya):
         ''' This handles the movement of mobs. It handles each direction separately so that if
             it tries moving up against a wall, it can still slide along the surface instead of
             getting stuck. '''
         # Move one direction at a time
         if (xa != 0 and ya != 0):
-            self.move(tile_map, tiles, width, height, xa, 0)
-            self.move(tile_map, tiles, width, height, 0, ya)
+            self.move(tile_map, xa, 0)
+            self.move(tile_map, 0, ya)
             return
 
         # Move horizontally
         while xa != 0:
             self.collision_mask.update(self.x, self.y)
             if (abs(xa) > 1):
-                if (not self.tile_collision(tile_map, tiles, width, height, self.one(xa), int(ya))):
+                if (not tile_map.tile_collision(self.collision_mask, self.one(xa), int(ya))):
                     self.x += self.one(xa)
                 xa -= self.one(xa)
             else:
-                if (not self.tile_collision(tile_map, tiles, width, height, self.one(xa), int(ya))):
+                if (not tile_map.tile_collision(self.collision_mask, self.one(xa), int(ya))):
                     self.x += xa
                 xa = 0
 
@@ -44,15 +44,15 @@ class Mob(Entity):
         while ya != 0:
             self.collision_mask.update(self.x, self.y)
             if abs(ya) > 1:
-                if not self.tile_collision(tile_map, tiles, width, height, int(xa), self.one(ya)):
+                if not tile_map.tile_collision(self.collision_mask, int(xa), self.one(ya)):
                     self.y += self.one(ya)
                 ya -= self.one(ya)
             else:
-                if not self.tile_collision(tile_map, tiles, width, height, int(xa), self.one(ya)):
+                if not tile_map.tile_collision(self.collision_mask, int(xa), self.one(ya)):
                     self.y += ya
                 ya = 0
 
-        self.tred = self.tile_depth(tile_map, tiles, width, height)
+        self.tred = tile_map.tile_depth(self.collision_mask)
 
     ################################################################################################
     # Make value equal 1 or -1
@@ -69,7 +69,7 @@ class Mob(Entity):
     ################################################################################################
     # Update Mob
     ################################################################################################
-    def update(self, tile_map, tiles, width, height, x_offset, y_offset):
+    def update(self, tile_map, x_offset, y_offset):
         pass
 
     ################################################################################################

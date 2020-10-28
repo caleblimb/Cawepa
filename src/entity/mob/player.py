@@ -81,11 +81,10 @@ class Player(Mob):
         self.sprite_x_offset = 16
         self.sprite_y_offset = 25
 
-    def update(self, tile_map, tiles, width, height, x_offset, y_offset):
+    def update(self, tile_map, x_offset, y_offset):
         self.hud.health = (self.health * 100) // self.max_health
         self.hud.stamina = (self.stamina * 100) // self.max_stamina
         self.hud.mana = (self.mana * 100) // self.max_mana
-
 
         mouse_direction = math.atan2(game.MOUSE_X - (self.x - x_offset), game.MOUSE_Y - (self.y - y_offset))
 
@@ -98,7 +97,7 @@ class Player(Mob):
                 self.mana -= 10
 
         self.collision_mask.update(self.x, self.y)
-        self.check_movement(tile_map, tiles, width, height)
+        self.check_movement(tile_map)
 
         if self.stamina < self.max_stamina:
             self.stamina += 0.01
@@ -107,7 +106,7 @@ class Player(Mob):
         if self.mana < self.max_mana:
             self.mana += 0.01
 
-    def check_movement(self, tile_map, tiles, width, height):
+    def check_movement(self, tile_map):
         update_frame = False
 
         player_speed = 1
@@ -139,7 +138,7 @@ class Player(Mob):
             update_frame = True
 
         # Update player position
-        self.move(tile_map, tiles, width, height, xa, ya)
+        self.move(tile_map, xa, ya)
         self.stamina -= (abs(xa) + abs(ya)) * movement_cost
 
         if update_frame:

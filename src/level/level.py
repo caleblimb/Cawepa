@@ -32,8 +32,4 @@ class Level():
     # Render Level
     ################################################################################################
     def draw(self, screen):
-        ''' This loops through every element of the level and calls it's draw function. '''
-        self.entities.sort(key=lambda Entity: Entity.y, reverse=False)
-        for entity in self.entities:
-            if - 32 < entity.y - self.y_scroll < game.SCREEN_HEIGHT + 32 and - 32 < entity.x - self.x_scroll < game.SCREEN_WIDTH + 32:
-                entity.draw(screen, self.x_scroll, self.y_scroll)
+        pass
