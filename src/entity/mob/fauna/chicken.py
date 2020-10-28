@@ -15,21 +15,8 @@ from ...projectile.fire_ball import Fireball
 
 
 class Chicken(Mob):
-    # Arrays of sprites for animations
-    sprite_up = []
-    sprite_right = []
-    sprite_down = []
-    sprite_left = []
-
-    # Current Frame
-    frame = 0.0
-
-    # Number of frames
-    frame_count = 8
-
     # Starting direction
     direction = Mob.Direction.DOWN
-
 
     def __init__(self, x, y):
         super().__init__(x, y)
@@ -41,6 +28,12 @@ class Chicken(Mob):
         self.xa = 0
         self.ya = 0
 
+        self.sprite_up = []
+        self.sprite_right = []
+        self.sprite_down = []
+        self.sprite_left = []
+
+        self.frame_count = 8
         # Create Player spritesheet
         pygame.sprite.Sprite.__init__(self)
         sprite_sheet = SpriteSheet("res/graphics/mobs/chicken_black.png")
@@ -108,15 +101,6 @@ class Chicken(Mob):
         if self.xa != 0 and self.ya != 0:
             self.move(tile_map, self.xa, self.ya)
 
-        # Update chicken direction
-        if self.direction == Chicken.Direction.UP:
-            self.sprite = self.sprite_up[int(self.frame)]
-        if self.direction == Chicken.Direction.RIGHT:
-            self.sprite = self.sprite_right[int(self.frame)]
-        if self.direction == Chicken.Direction.DOWN:
-            self.sprite = self.sprite_down[int(self.frame)]
-        if self.direction == Chicken.Direction.LEFT:
-            self.sprite = self.sprite_left[int(self.frame)]
-
     def draw(self, screen, x_offset, y_offset):
+        self.update_sprite_direction()
         super().draw(screen, x_offset, y_offset)

@@ -20,6 +20,17 @@ class Mob(Entity):
     projectile = None
     direction = None
 
+    # Current Frame
+    frame = 0.0
+
+    # Number of frames
+    frame_count = 0
+
+    sprite_up = []
+    sprite_right = []
+    sprite_down = []
+    sprite_left = []
+
     def __init__(self, x, y):
         super().__init__(x, y)
 
@@ -86,6 +97,16 @@ class Mob(Entity):
             return -1
         return 1
 
+    def update_sprite_direction(self):
+        # Update chicken direction
+        if self.direction == Mob.Direction.UP:
+            self.sprite = self.sprite_up[int(self.frame)]
+        if self.direction == Mob.Direction.RIGHT:
+            self.sprite = self.sprite_right[int(self.frame)]
+        if self.direction == Mob.Direction.DOWN:
+            self.sprite = self.sprite_down[int(self.frame)]
+        if self.direction == Mob.Direction.LEFT:
+            self.sprite = self.sprite_left[int(self.frame)]
     ################################################################################################
     # Update Mob
     ################################################################################################

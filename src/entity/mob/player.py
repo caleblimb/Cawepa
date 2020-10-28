@@ -22,17 +22,7 @@ class Player(Mob):
         DOWN = 2
         LEFT = 3
 
-    # Arrays of sprites for animations
-    sprite_up = []
-    sprite_right = []
-    sprite_down = []
-    sprite_left = []
-
-    # Current Frame
-    frame = 0.0
-
     # Number of frames
-    frame_count = 8
 
     # Starting direction
     direction = Direction.DOWN
@@ -55,6 +45,13 @@ class Player(Mob):
 
         # Spell Cooldown
         self.cooldown = 60
+
+        self.frame_count = 8
+
+        self.sprite_up = []
+        self.sprite_right = []
+        self.sprite_down = []
+        self.sprite_left = []
 
         # Create Player spritesheet
         pygame.sprite.Sprite.__init__(self)
@@ -143,18 +140,6 @@ class Player(Mob):
             while self.frame >= self.frame_count:
                 self.frame -= self.frame_count
 
-            # Update player direction
-            if self.direction == Mob.Direction.UP:
-                self.sprite = self.sprite_up[int(self.frame)]
-            if self.direction == Mob.Direction.RIGHT:
-                self.sprite = self.sprite_right[int(self.frame)]
-            if self.direction == Mob.Direction.DOWN:
-                self.sprite = self.sprite_down[int(self.frame)]
-            if self.direction == Mob.Direction.LEFT:
-                self.sprite = self.sprite_left[int(self.frame)]
-
-
-
     def draw(self, screen, x_offset, y_offset):
+        self.update_sprite_direction()
         super().draw(screen, x_offset, y_offset)
-        self.hud.draw(screen)
