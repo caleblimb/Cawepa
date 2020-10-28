@@ -38,6 +38,48 @@ def draw(screen, level):
     screen.blit(game.MOUSE_CURSOR, (game.MOUSE_X, game.MOUSE_Y))
     pygame.display.update()
 
+def updateInputValue(event):
+    ''' Updates user input values '''
+    # Check if keys are pressed
+    if event.type == pygame.KEYDOWN:
+        if event.key == pygame.K_UP or event.key == pygame.K_w:
+            game.INPUT_UP = True
+        if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
+            game.INPUT_RIGHT = True
+        if event.key == pygame.K_DOWN or event.key == pygame.K_s:
+            game.INPUT_DOWN = True
+        if event.key == pygame.K_LEFT or event.key == pygame.K_a:
+            game.INPUT_LEFT = True
+        if event.key == pygame.K_LSHIFT:
+            game.INPUT_SHIFT = True
+
+    # Check if keys are released
+    if event.type == pygame.KEYUP:
+        if event.key == pygame.K_UP or event.key == pygame.K_w:
+            game.INPUT_UP = False
+        if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
+            game.INPUT_RIGHT = False
+        if event.key == pygame.K_DOWN or event.key == pygame.K_s:
+            game.INPUT_DOWN= False
+        if event.key == pygame.K_LEFT or event.key == pygame.K_a:
+            game.INPUT_LEFT = False
+        if event.key == pygame.K_LSHIFT:
+            game.INPUT_SHIFT = False
+
+    # Check if Mouse Buttons are pressed
+    if event.type == pygame.MOUSEBUTTONDOWN:
+        if event.button == pygame.BUTTON_LEFT:
+            game.MOUSE_LEFT = True
+        if event.button == pygame.BUTTON_RIGHT:
+            game.MOUSE_RIGHT = True
+
+    # Check if Mouse Buttons are released
+    if event.type == pygame.MOUSEBUTTONUP:
+        if event.button == pygame.BUTTON_LEFT:
+            game.MOUSE_LEFT = False
+        if event.button == pygame.BUTTON_RIGHT:
+            game.MOUSE_RIGHT = True
+
 ####################################################################################################
 # Game Loop - Program execution starts here
 ####################################################################################################
@@ -75,47 +117,11 @@ def main():
             # Check if running
             if event.type == pygame.QUIT:
                 running = False
-            # Check if keys are pressed
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_UP or event.key == pygame.K_w:
-                    game.INPUT_UP = True
-                if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
-                    game.INPUT_RIGHT = True
-                if event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                    game.INPUT_DOWN = True
-                if event.key == pygame.K_LEFT or event.key == pygame.K_a:
-                    game.INPUT_LEFT = True
-                if event.key == pygame.K_LSHIFT:
-                    game.INPUT_SHIFT = True
 
-            # Check if keys are released
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_UP or event.key == pygame.K_w:
-                    game.INPUT_UP = False
-                if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
-                    game.INPUT_RIGHT = False
-                if event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                    game.INPUT_DOWN= False
-                if event.key == pygame.K_LEFT or event.key == pygame.K_a:
-                    game.INPUT_LEFT = False
-                if event.key == pygame.K_LSHIFT:
-                    game.INPUT_SHIFT = False
+            # Update user input
+            updateInputValue(event)
 
-            # Check if Mouse Buttons are pressed
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == pygame.BUTTON_LEFT:
-                    game.MOUSE_LEFT = True
-                if event.button == pygame.BUTTON_RIGHT:
-                    game.MOUSE_RIGHT = True
-
-            # Check if Mouse Buttons are released
-            if event.type == pygame.MOUSEBUTTONUP:
-                if event.button == pygame.BUTTON_LEFT:
-                    game.MOUSE_LEFT = False
-                if event.button == pygame.BUTTON_RIGHT:
-                    game.MOUSE_RIGHT = True
-
-        # Update the current level
+        # Update the mouse
         mouse_pos = pygame.mouse.get_pos()
         game.MOUSE_X = mouse_pos[0]
         game.MOUSE_Y = mouse_pos[1]
