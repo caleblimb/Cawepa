@@ -6,6 +6,7 @@ import pygame
 #Global Variables
 SCREEN_WIDTH = 400
 SCREEN_HEIGHT = 300
+CLIENT_PLAYER = None
 
 #Input Values
 INPUT_LEFT = False

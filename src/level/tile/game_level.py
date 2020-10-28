@@ -90,7 +90,8 @@ class GameLevel(Level):
                 entity.draw(screen, self.x_scroll, self.y_scroll)
 
         self.drawTiles(screen, self.tile_map.tile_layer_2,  x0, x1, y0, y1)
-                
+        game.CLIENT_PLAYER.hud.draw(screen)
+
     def drawTiles(self, screen, tile_layer, x0, x1, y0, y1):
         #Loop through tile_map
         for y in range (y0, y1):
