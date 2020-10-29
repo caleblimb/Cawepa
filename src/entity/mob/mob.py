@@ -42,7 +42,7 @@ class Mob(Entity):
             it tries moving up against a wall, it can still slide along the surface instead of
             getting stuck. '''
 
-        if update_direction:
+        if update_direction and (xa !=0 or ya != 0):
             if abs(xa) > abs(ya):
                 if xa > 0:
                     self.direction = Mob.Direction.RIGHT
@@ -53,6 +53,8 @@ class Mob(Entity):
                     self.direction = Mob.Direction.DOWN
                 else:
                     self.direction = Mob.Direction.UP
+            self.update_sprite_direction()
+
         # Move one direction at a time
         if (xa != 0 and ya != 0):
             self.move(tile_map, xa, 0, False)
@@ -98,7 +100,7 @@ class Mob(Entity):
         return 1
 
     def update_sprite_direction(self):
-        # Update chicken direction
+        # Update sprite direction
         if self.direction == Mob.Direction.UP:
             self.sprite = self.sprite_up[int(self.frame)]
         if self.direction == Mob.Direction.RIGHT:

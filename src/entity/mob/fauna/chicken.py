@@ -52,7 +52,7 @@ class Chicken(Mob):
         self.sprite = self.sprite_down[0]
 
         # Define collision mask
-        self.collision_mask = CollisionMask(5, 9, -1, -5)
+        self.collision_mask = CollisionMask(5, 9, 1, 5)
 
         # Place (x, y) origin in the center of where the feet are.
         self.sprite_x_offset = 6
@@ -101,5 +101,4 @@ class Chicken(Mob):
             self.move(tile_map, self.xa, self.ya)
 
     def draw(self, screen, x_offset, y_offset):
-        self.update_sprite_direction()
         super().draw(screen, x_offset, y_offset)

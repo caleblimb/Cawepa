@@ -15,8 +15,8 @@ from .component.label import Label
 ####################################################################################################
 class Menu(Level):
     ''' Define the characteristics of the main menu '''
-    def __init__(self, title, main_menu_button):
-        self.main_menu_button = main_menu_button
+    def __init__(self, title, has_main_menu_button):
+        self.has_main_menu_button = has_main_menu_button
 
         pygame.sprite.Sprite.__init__(self)
         self.background = pygame.image.load("res/graphics/gui/menu_background.png")
@@ -43,7 +43,7 @@ class Menu(Level):
                                   self.sprite_button_hover, \
                                   self.sprite_button_press)
 
-        if main_menu_button:
+        if self.has_main_menu_button:
             self.button_back.label = Label(x, y, self.button_width, self.button_height, 14, "BACK")
         else:
             self.button_back.label = Label(x, y, self.button_width, self.button_height, 14, "QUIT")
@@ -54,13 +54,13 @@ class Menu(Level):
     def update(self):
         ''' Update menu components '''
         self.button_back.update()
-        if self.button_back.action_event > 0:
-            if self.main_menu_button:
+        if self.button_back.action_event == True:
+            if self.has_main_menu_button:
                 game.CHANGE_LEVEL = "MENU_MAIN"
             else:
                 game.CHANGE_LEVEL = "QUIT"
 
-            self.button_back.action_event -= 1
+            self.button_back.reset_action_event()
 
     ################################################################################################
     # Draw Menu

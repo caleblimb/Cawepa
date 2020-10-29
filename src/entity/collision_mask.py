@@ -26,5 +26,5 @@ class CollisionMask():
 
     def update(self, x, y):
         '''Updates the location of the colision mask to follow the entity.'''
-        self.x = x + self.x_offset
-        self.y = y + self.y_offset
+        self.x = x - self.x_offset
+        self.y = y - self.y_offset

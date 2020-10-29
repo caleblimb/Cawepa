@@ -12,9 +12,10 @@ import pygame
 from game import game
 from level.levels.level1 import Level1
 from menu.main_menu import MainMenu
-from menu.online_menu import OnlineMenu
+from menu.load_menu import LoadMenu
 from menu.credits_menu import CreditsMenu
 from menu.options_menu import OptionsMenu
+from menu.new_menu import NewMenu
 
 # Initialize pygame module
 pygame.init()
@@ -132,8 +133,10 @@ def main():
                 current_level = Level1()
             if game.CHANGE_LEVEL == "MENU_MAIN":
                 current_level = MainMenu()
-            if game.CHANGE_LEVEL == "MENU_ONLINE":
-                current_level = OnlineMenu()
+            if game.CHANGE_LEVEL == "MENU_NEW":
+                current_level = NewMenu()
+            if game.CHANGE_LEVEL == "MENU_LOAD":
+                current_level = LoadMenu()
             if game.CHANGE_LEVEL == "MENU_OPTIONS":
                 current_level = OptionsMenu()
             if game.CHANGE_LEVEL == "MENU_CREDITS":

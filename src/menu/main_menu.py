@@ -27,7 +27,7 @@ class MainMenu(Menu):
                                            self.sprite_button_press)
 
         self.button_single_player.label = Label(x, y, self.button_width, self.button_height, 14, \
-                                                "Single Player")
+                                                "New Game")
 
         # Play an online game
         y = game.SCREEN_HEIGHT / 2 - 19
@@ -36,8 +36,8 @@ class MainMenu(Menu):
                                     self.sprite_button_hover, \
                                     self.sprite_button_press)
         self.button_online.label = Label(x, y, self.button_width, self.button_height, 14, \
-                                         "Play Online")
-        
+                                         "Load Game")
+
         # Go to options menu
         y = game.SCREEN_HEIGHT / 2 + 1
         self.button_options = Button(x, y, self.button_width, self.button_height, \
@@ -65,27 +65,27 @@ class MainMenu(Menu):
         super().update()
         # Start Single-Player Game
         self.button_single_player.update()
-        if self.button_single_player.action_event > 0:
-            game.CHANGE_LEVEL = "LEVEL_TEST"
-            self.button_single_player.action_event -= 1
+        if self.button_single_player.action_event:
+            game.CHANGE_LEVEL = "MENU_NEW"
+            self.button_single_player.reset_action_event()
 
-        # Go to Online Menu
+        # Go to Load Menu
         self.button_online.update()
-        if self.button_online.action_event > 0:
-            game.CHANGE_LEVEL = "MENU_ONLINE"
-            self.button_online.action_event -= 1
+        if self.button_online.action_event:
+            game.CHANGE_LEVEL = "MENU_LOAD"
+            self.button_online.reset_action_event()
 
         # Go to Options Menu
         self.button_options.update()
-        if self.button_options.action_event > 0:
+        if self.button_options.action_event:
             game.CHANGE_LEVEL = "MENU_OPTIONS"
-            self.button_options.action_event -= 1
+            self.button_options.reset_action_event()
 
         # Go to Credits
         self.button_credits.update()
-        if self.button_credits.action_event > 0:
+        if self.button_credits.action_event:
             game.CHANGE_LEVEL = "MENU_CREDITS"
-            self.button_credits.action_event -= 1
+            self.button_credits.reset_action_event()
 
     ################################################################################################
     # Draw Menu

@@ -12,31 +12,21 @@ from .component.label import Label
 ####################################################################################################
 # Online Play Menu
 ####################################################################################################
-class OnlineMenu(Menu):
+class LoadMenu(Menu):
     ''' Define the characteristics of the options menu '''
     def __init__(self):
-        super().__init__("Online Game", True)
+        super().__init__("Load Game", True)
 
         x = game.SCREEN_WIDTH / 2 - 50
-        y = game.SCREEN_HEIGHT / 2 - 19
+        y = game.SCREEN_HEIGHT / 2 - 9
 
-        self.button_host = Button(x, y, self.button_width, self.button_height, \
+        self.button_load = Button(x, y, self.button_width, self.button_height, \
                                   self.sprite_button_idle, \
                                   self.sprite_button_hover, \
                                   self.sprite_button_press)
 
-        self.button_host.label = Label(x, y, self.button_width, self.button_height, 14, \
-                                       "Host LAN Game")
-
-        y = game.SCREEN_HEIGHT / 2 + 1
-        self.button_join = Button(x, y, self.button_width, self.button_height, \
-                                  self.sprite_button_idle, \
-                                  self.sprite_button_hover, \
-                                  self.sprite_button_press)
-
-        self.button_join.label = Label(x, y, self.button_width, self.button_height, 14, \
-                                       "Join LAN Game")
-
+        self.label_load = Label(x, y, self.button_width, self.button_height, 14, \
+                                       "Load Game")
 
     ################################################################################################
     # Update Menu
@@ -44,8 +34,7 @@ class OnlineMenu(Menu):
     def update(self):
         ''' Update menu components '''
         super().update()
-        self.button_host.update()
-        self.button_join.update()
+        self.button_load.update()
 
     ################################################################################################
     # Draw Menu
@@ -53,5 +42,5 @@ class OnlineMenu(Menu):
     def draw(self, screen):
         ''' Draw menu components '''
         super().draw(screen)
-        self.button_host.draw(screen)
-        self.button_join.draw(screen)
+        self.button_load.draw(screen)
+        self.label_load.draw(screen)

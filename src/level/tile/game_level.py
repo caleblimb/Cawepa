@@ -12,12 +12,14 @@ from .tile import TileMap
 class GameLevel(Level):
     ''' Tile Based Level '''
     tile_map = None
+    player = None
     ################################################################################################
     # Initialize Level
     ################################################################################################
     def __init__(self):
         #Call Level constructor
         super().__init__()
+        self.entities.append(game.PLAYER)
 
     ################################################################################################
     # Update Level
@@ -30,8 +32,7 @@ class GameLevel(Level):
                 if entity.projectile:
                     self.entities.append(entity.projectile)
                     entity.projectile = None
-            if isinstance(entity, Player):
-                self.scroll_follow(entity.x, entity.y)
+        self.scroll_follow(game.PLAYER.x, game.PLAYER.y)
 
 
     ################################################################################################
@@ -90,6 +91,7 @@ class GameLevel(Level):
                 entity.draw(screen, self.x_scroll, self.y_scroll)
 
         self.drawTiles(screen, self.tile_map.tile_layer_2,  x0, x1, y0, y1)
+        game.PLAYER.hud.draw(screen)
                 
     def drawTiles(self, screen, tile_layer, x0, x1, y0, y1):
         #Loop through tile_map

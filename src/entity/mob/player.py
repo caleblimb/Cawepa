@@ -27,7 +27,7 @@ class Player(Mob):
     # Starting direction
     direction = Direction.DOWN
 
-    def __init__(self, x, y):
+    def __init__(self, x, y, num_choice):
         super().__init__(x, y)
 
         # Create HUD
@@ -46,7 +46,7 @@ class Player(Mob):
         # Spell Cooldown
         self.cooldown = 60
 
-        self.frame_count = 8
+        self.frame_count = 4
 
         self.sprite_up = []
         self.sprite_right = []
@@ -55,34 +55,52 @@ class Player(Mob):
 
         # Create Player spritesheet
         pygame.sprite.Sprite.__init__(self)
-        sprite_sheet = SpriteSheet("res/graphics/player.png")
+        sprite_sheet = SpriteSheet("res/graphics/players.png")
 
+        # There are 5 options here
+        num_choice = num_choice % 5
         # Add each direction of the walking animation
-        for frame in range (0, self.frame_count):
-            self.sprite_up   .append(Sprite( \
-                sprite_sheet.get_image(32 * frame, 32 * 0, 32, 32), 32, 32))
-            self.sprite_right.append(Sprite( \
-                sprite_sheet.get_image(32 * frame, 32 * 1, 32, 32), 32, 32))
-            self.sprite_down .append(Sprite( \
-                sprite_sheet.get_image(32 * frame, 32 * 2, 32, 32), 32, 32))
-            self.sprite_left .append(Sprite( \
-                sprite_sheet.get_image(32 * frame, 32 * 3, 32, 32), 32, 32))
+        for frame in range (2):
+            # Left
+            self.sprite_left .append(Sprite(sprite_sheet.get_image \
+                (16 * 0, 16 * 0 + (48 * num_choice), 16, 16), 16, 16))
+            self.sprite_left .append(Sprite(sprite_sheet.get_image \
+                (16 * 0, 16 * (1 + frame) + (48 * num_choice), 16, 16), 16, 16))
+            
+            # Down
+            self.sprite_down .append(Sprite(sprite_sheet.get_image \
+                (16 * 1, 16 * 0 + (48 * num_choice), 16, 16), 16, 16))
+            self.sprite_down .append(Sprite(sprite_sheet.get_image \
+                (16 * 1, 16 * (1 + frame) + (48 * num_choice), 16, 16), 16, 16))
+            
+            # Up
+            self.sprite_up   .append(Sprite(sprite_sheet.get_image \
+                (16 * 2, 16 * 0 + (48 * num_choice), 16, 16), 16, 16))
+            self.sprite_up   .append(Sprite(sprite_sheet.get_image \
+                (16 * 2, 16 * (1 + frame) + (48 * num_choice), 16, 16), 16, 16))
+            
+            # Right
+            self.sprite_right.append(Sprite(sprite_sheet.get_image \
+                (16 * 3, 16 * 0 + (48 * num_choice), 16, 16), 16, 16))
+            self.sprite_right.append(Sprite(sprite_sheet.get_image \
+                (16 * 3, 16 * (1 + frame) + (48 * num_choice), 16, 16), 16, 16))
 
         # Starting Sprite
         self.sprite = self.sprite_down[0]
 
         # Define collision mask
-        self.collision_mask = CollisionMask(12, 12, -6, -6)
+        self.collision_mask = CollisionMask(9, 9, 5, 4)
 
         # Place (x, y) origin in the center of where the feet are.
-        self.sprite_x_offset = 16
-        self.sprite_y_offset = 25
+        self.sprite_x_offset = 8
+        self.sprite_y_offset = 10
 
     def update(self, tile_map, x_offset, y_offset):
         self.hud.health = (self.health * 100) // self.max_health
         self.hud.stamina = (self.stamina * 100) // self.max_stamina
         self.hud.mana = (self.mana * 100) // self.max_mana
 
+        # Mouse direction is tha angle of the line from the player to the cursor
         mouse_direction = math.atan2(game.MOUSE_X - (self.x - x_offset), game.MOUSE_Y - (self.y - y_offset))
 
         if self.cooldown > 0:
@@ -136,10 +154,9 @@ class Player(Mob):
 
         if update_frame:
             # Update animation frame
-            self.frame += player_speed / 4
+            self.frame += player_speed / 6
             while self.frame >= self.frame_count:
                 self.frame -= self.frame_count
 
     def draw(self, screen, x_offset, y_offset):
-        self.update_sprite_direction()
         super().draw(screen, x_offset, y_offset)

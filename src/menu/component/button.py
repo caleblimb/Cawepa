@@ -1,3 +1,4 @@
+#pylint: disable=F0401
 from game import game
 from .component import Component
 
@@ -9,7 +10,7 @@ class Button(Component):
     sprite_hover = None
     sprite_pressed = None
     mouse_pressed = False
-    action_event = 0
+    action_event = False
     enable = False
 
     def __init__(self, x, y, width, height, sprite_idle, sprite_hover, sprite_pressed):
@@ -30,11 +31,14 @@ class Button(Component):
                     self.sprite = self.sprite_pressed
             else:
                 if self.mouse_pressed:
-                    self.action_event += 1
+                    self.action_event = True
                 self.enable = True
+                self.mouse_pressed = False
         else:
             if not game.MOUSE_LEFT:
                 self.mouse_pressed = False
                 self.enable = False
             self.sprite = self.sprite_idle
-            
+
+    def reset_action_event(self):
+        self.action_event = False

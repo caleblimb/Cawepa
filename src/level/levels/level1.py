@@ -26,8 +26,5 @@ class Level1(GameLevel):
         self.x_scroll = 400
         self.y_scroll = 400
 
-        # Add Player to Level
-        self.entities.append(Player(29 * 16, 86 * 16))
-
         for _ in range(100):
             self.entities.append(Chicken(random.randint(30 * 16, 98 * 16), random.randint(30 * 16, 98 * 16)))
