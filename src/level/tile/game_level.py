@@ -12,8 +12,6 @@ from .tile import TileMap
 class GameLevel(Level):
     ''' Tile Based Level '''
     tile_map = None
-
-    players = []
     ################################################################################################
     # Initialize Level
     ################################################################################################
@@ -26,20 +24,14 @@ class GameLevel(Level):
     ################################################################################################
     def update(self):
         ''' This loops through every element of the level and calls it's update function. '''
-        game.CLIENT_PLAYER.update(self.tile_map, self.x_scroll, self.y_scroll)
-        self.scroll_follow(game.CLIENT_PLAYER.x, game.CLIENT_PLAYER.y)
-
         for entity in self.entities:
             entity.update(self.tile_map, self.x_scroll, self.y_scroll)
             if isinstance(entity, Mob):
                 if entity.projectile:
                     self.entities.append(entity.projectile)
                     entity.projectile = None
-
-        for player in self.players:
-            if player.projectile:
-                self.entities.append(player.projectile)
-                player.projectile = None
+            if isinstance(entity, Player):
+                self.scroll_follow(entity.x, entity.y)
 
 
     ################################################################################################
@@ -93,29 +85,12 @@ class GameLevel(Level):
 
         ''' This loops through every element of the level and calls it's draw function. '''
         self.entities.sort(key=lambda Entity: Entity.y, reverse=False)
-        self.players.sort(key=lambda Player: Player.y, reverse=False)
-        player_index = 0
-
-        if len(self.entities) > 0:
-            for e in range (0, len(self.entities)):
-                if player_index < len(self.players):
-                    entity_before_y = 0
-                    if e > 0:
-                        entity_before_y = self.entities[e - 1].y
-                    if entity_before_y <= self.players[player_index].y <= self.entities[e].y:
-                        if - 32 < self.players[player_index].y - self.y_scroll < game.SCREEN_HEIGHT + 32 and - 32 < self.players[player_index].x - self.x_scroll < game.SCREEN_WIDTH + 32:
-                            self.players[player_index].draw(screen, self.x_scroll, self.y_scroll)
-                        player_index += 1
-
-                if - 32 < self.entities[e].y - self.y_scroll < game.SCREEN_HEIGHT + 32 and - 32 < self.entities[e].x - self.x_scroll < game.SCREEN_WIDTH + 32:
-                    self.entities[e].draw(screen, self.x_scroll, self.y_scroll)
-        elif len(self.players) > 0:
-            for p in self.players:
-                p.drawdraw(screen, self.x_scroll, self.y_scroll)
+        for entity in self.entities:
+            if - 32 < entity.y - self.y_scroll < game.SCREEN_HEIGHT + 32 and - 32 < entity.x - self.x_scroll < game.SCREEN_WIDTH + 32:
+                entity.draw(screen, self.x_scroll, self.y_scroll)
 
         self.drawTiles(screen, self.tile_map.tile_layer_2,  x0, x1, y0, y1)
-        game.CLIENT_PLAYER.hud.draw(screen)
-
+                
     def drawTiles(self, screen, tile_layer, x0, x1, y0, y1):
         #Loop through tile_map
         for y in range (y0, y1):
@@ -126,4 +101,3 @@ class GameLevel(Level):
                 tile_sprite = self.tile_map.get_sprite(tile_layer, x, y)
                 if tile_sprite:
                     screen.blit(tile_sprite, coords)
-

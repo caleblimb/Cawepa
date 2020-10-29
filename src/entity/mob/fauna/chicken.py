@@ -13,7 +13,6 @@ from ..mob import Mob
 from ...collision_mask import CollisionMask
 from ...projectile.fire_ball import Fireball
 
-
 class Chicken(Mob):
     # Starting direction
     direction = Mob.Direction.DOWN
