@@ -2,7 +2,9 @@
 '''
 This is the template for a type of file
 '''
+from time import time_ns as nano_time
 import pygame
+from game import game
 from game.sprite import SpriteSheet
 
 class Tile():
@@ -33,18 +35,26 @@ class TileMap():
     tile_layer_solid = []
     tile_layer_depth = []
 
+    # List of speacial tiles that need to be animated
+    tiles_with_fire_animation = [1406, 1408, 1411, 1413, 1416, 1418, 1241, 1423, 1426, 1428, 1431]
+    tiles_with_waterfall_animation = [1145, 1146, 1147, 1149, 1185, 1186, 1187, 1189]
+    tiles_with_doors_that_open = []
+    for i in range (440, 454):
+        tiles_with_doors_that_open.append(i * 5)
+        tiles_with_doors_that_open.append(i * 5 + 2)
+
     def __init__(self, folder_name):
         # Define dimenstions of tile spritesheet according to how many tiles it has
-        tile_type_width = 5
-        tile_type_height = 455
+        self.tile_type_width = 5
+        self.tile_type_height = 455
 
         # Create tile spritesheet
         pygame.sprite.Sprite.__init__(self)
         tile_sheet = SpriteSheet("res/graphics/tiles.png")
 
         # Add all tiles from tile spritesheet to tile types
-        for y in range(0, tile_type_height):
-            for x in range(0, tile_type_width):
+        for y in range(0, self.tile_type_height):
+            for x in range(0, self.tile_type_width):
                 tile = tile_sheet.get_image(x * 16, y * 16, 16, 16)
                 # Add tile to list of tile types
                 self.tiles.append(tile)
@@ -62,10 +72,21 @@ class TileMap():
             return None
         try:
             # Return the tile_type at the specified location
-            if int(tile_map[y * self.width + x]) == -1:
+            tile_index = int(tile_map[y * self.width + x])
+            if tile_index == -1:
                 return None
-            else:
-                return self.tiles[int(tile_map[y * self.width + x])]
+
+            if tile_index in self.tiles_with_fire_animation and nano_time() // 100000000 % 2 == 0:
+                return self.tiles[tile_index + 1]
+
+            if tile_index in self.tiles_with_waterfall_animation and nano_time() // 100000000 % 2 == 0:
+                return self.tiles[tile_index + self.tile_type_height]
+
+            if tile_index in self.tiles_with_doors_that_open \
+                and abs(game.PLAYER.x - (x * 16 + 8)) < 16 and abs(game.PLAYER.y - (y * 16 + 8)) < 32:
+                return self.tiles[tile_index + 1]
+
+            return self.tiles[tile_index]
         except IndexError:
             return None
 

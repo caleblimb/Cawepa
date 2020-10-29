@@ -3,7 +3,7 @@ These are values that can be accesded by anywhere in the code.
 '''
 import pygame
 
-#Global Variables
+# Global Variables
 SCREEN_WIDTH = 400
 SCREEN_HEIGHT = 300
 PLAYER = None
