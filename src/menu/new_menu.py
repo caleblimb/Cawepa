@@ -29,7 +29,6 @@ class NewMenu(Menu):
         sprite_sheet = SpriteSheet("res/graphics/players.png")
         self.player_choice_sprite = []
         for i in range(self.number_of_choices):
-            print(i)
             option = sprite_sheet.get_image(16 * 1, i * 48, 16, 16)
             scaled_option = pygame.transform.scale(option, (32, 32))
             self.player_choice_sprite.append(scaled_option)
