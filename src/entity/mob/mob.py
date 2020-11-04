@@ -4,6 +4,8 @@ This handles everything that every creature has in common including the player
 '''
 from enum import Enum
 from ..entity import Entity
+from game.sounds import Sounds
+from game import game
 
 class Mob(Entity):
     '''
@@ -30,6 +32,9 @@ class Mob(Entity):
     sprite_right = []
     sprite_down = []
     sprite_left = []
+
+    # Step sound cooldown
+    step_sound_cooldown = 0
 
     def __init__(self, x, y):
         super().__init__(x, y)
@@ -84,8 +89,9 @@ class Mob(Entity):
                 if not tile_map.tile_collision(self.collision_mask, int(xa), self.one(ya)):
                     self.y += ya
                 ya = 0
-
+        
         self.tred = tile_map.tile_depth(self.collision_mask)
+        
 
     ################################################################################################
     # Make value equal 1 or -1
