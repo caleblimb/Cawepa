@@ -37,12 +37,12 @@ class Mob(Entity):
     ################################################################################################
     # Move Mob to new position
     ################################################################################################
-    def move (self, tile_map, xa, ya, update_direction = True):
+    def move (self, tile_map, xa, ya, is_first_call = True):
         ''' This handles the movement of mobs. It handles each direction separately so that if
             it tries moving up against a wall, it can still slide along the surface instead of
             getting stuck. '''
 
-        if update_direction and (xa !=0 or ya != 0):
+        if is_first_call and (xa !=0 or ya != 0):
             if abs(xa) > abs(ya):
                 if xa > 0:
                     self.direction = Mob.Direction.RIGHT

@@ -10,7 +10,7 @@ import pygame
 
 # Import local modules
 from game import game
-from level.levels.level1 import Level1
+from level.levels.level_camp import LevelCamp
 from menu.main_menu import MainMenu
 from menu.load_menu import LoadMenu
 from menu.credits_menu import CreditsMenu
@@ -130,7 +130,7 @@ def main():
         # Check Level and update it if needed
         if game.CHANGE_LEVEL:
             if game.CHANGE_LEVEL == "LEVEL_TEST":
-                current_level = Level1()
+                current_level = LevelCamp()
             if game.CHANGE_LEVEL == "MENU_MAIN":
                 current_level = MainMenu()
             if game.CHANGE_LEVEL == "MENU_NEW":

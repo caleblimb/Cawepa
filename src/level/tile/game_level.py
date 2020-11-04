@@ -81,16 +81,22 @@ class GameLevel(Level):
         y0 = int((self.y_scroll - 16) / 16)
         y1 = int((self.y_scroll + game.SCREEN_HEIGHT + 16) / 16)
 
-        self.drawTiles(screen, self.tile_map.tile_layer_0,  x0, x1, y0, y1)
-        self.drawTiles(screen, self.tile_map.tile_layer_1,  x0, x1, y0, y1)
+        # Draw base layer of tiles
+        self.drawTiles(screen, self.tile_map.tile_layer_background_1,  x0, x1, y0, y1)
+        self.drawTiles(screen, self.tile_map.tile_layer_background_2,  x0, x1, y0, y1)
 
+        # Draw entities
         ''' This loops through every element of the level and calls it's draw function. '''
         self.entities.sort(key=lambda Entity: Entity.y, reverse=False)
         for entity in self.entities:
             if - 32 < entity.y - self.y_scroll < game.SCREEN_HEIGHT + 32 and - 32 < entity.x - self.x_scroll < game.SCREEN_WIDTH + 32:
                 entity.draw(screen, self.x_scroll, self.y_scroll)
 
-        self.drawTiles(screen, self.tile_map.tile_layer_2,  x0, x1, y0, y1)
+        # Draw front layer of tiles
+        self.drawTiles(screen, self.tile_map.tile_layer_foreground_1,  x0, x1, y0, y1)
+        self.drawTiles(screen, self.tile_map.tile_layer_foreground_2,  x0, x1, y0, y1)
+
+        # Draw UI
         game.PLAYER.hud.draw(screen)
                 
     def drawTiles(self, screen, tile_layer, x0, x1, y0, y1):

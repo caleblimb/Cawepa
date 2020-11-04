@@ -18,7 +18,7 @@ class Tile():
 
     def load_tiles(self, file_name):
         pass
-    
+
 class TileMap():
     # Tile types for level
     tiles = []
@@ -26,11 +26,12 @@ class TileMap():
     width = 0
     height = 0
     # Background Layers
-    tile_layer_0 = []
-    tile_layer_1 = []
+    tile_layer_background_1 = []
+    tile_layer_background_2 = []
 
     # Foreground Layers
-    tile_layer_2 = []
+    tile_layer_foreground_1 = []
+    tile_layer_foreground_2 = []
 
     tile_layer_solid = []
     tile_layer_depth = []
@@ -97,10 +98,10 @@ class TileMap():
         ''' This method is used for collision detection with solid tiles such as walls. '''
         # Define the 4 corners of the collsion mask
         # top-left = (x0, y0), top-right = (x1,y0), bottom-left = (x0, y1), bottom-right = (x1, y1)
-        x0 = int((collision_mask.x + xa) / 16)
-        x1 = int((collision_mask.x + xa + collision_mask.width) / 16)
-        y0 = int((collision_mask.y + ya) / 16)
-        y1 = int((collision_mask.y + ya + collision_mask.height) / 16)
+        x0 = int((collision_mask.x + xa) // 16)
+        x1 = int((collision_mask.x + xa + collision_mask.width) // 16)
+        y0 = int((collision_mask.y + ya) // 16)
+        y1 = int((collision_mask.y + ya + collision_mask.height) // 16)
 
         try:
             # Return a collsion if any of the four corners run into a solid tile
@@ -135,12 +136,13 @@ class TileMap():
     ################################################################################################
     def load_level(self, folder_name):
         # Background Layers
-        self.tile_layer_0 = self.load_array(folder_name + "/layer_0.csv")
-        self.tile_layer_1 = self.load_array(folder_name + "/layer_1.csv")
-        self.tile_layer_2 = self.load_array(folder_name + "/layer_2.csv")
-        self.tile_layer_solid = self.load_array(folder_name + "/layer_solid.csv")
+        self.tile_layer_background_1 = self.load_array(folder_name + "/background_1.csv")
+        self.tile_layer_background_2 = self.load_array(folder_name + "/background_2.csv")
+        self.tile_layer_foreground_1 = self.load_array(folder_name + "/foreground_1.csv")
+        self.tile_layer_foreground_2 = self.load_array(folder_name + "/foreground_2.csv")
+        self.tile_layer_solid = self.load_array(folder_name + "/collision.csv")
 
-        for tile in self.tile_layer_0:
+        for tile in self.tile_layer_background_1:
             if tile <= 14:
                 self.tile_layer_depth.append(16 - tile)
             elif 15 <= tile <= 29:
