@@ -103,14 +103,20 @@ class TileMap():
         y0 = int((collision_mask.y + ya) // 16)
         y1 = int((collision_mask.y + ya + collision_mask.height) // 16)
 
+        # Check each corner to see if it's in the map
+        a_is_outside = not (x0 < 0 or y0 < 0 or x0 >= self.width or y0 >= self.height)
+        b_is_outside = not (x1 < 0 or y0 < 0 or x1 >= self.width or y0 >= self.height)
+        c_is_outside = not (x0 < 0 or y1 < 0 or x0 >= self.width or y1 >= self.height)
+        d_is_outside = not (x1 < 0 or y1 < 0 or x1 >= self.width or y1 >= self.height)
+
         try:
             # Return a collsion if any of the four corners run into a solid tile
-            return self.tile_layer_solid[y0 * self.width + x0] != -1 or \
-                    self.tile_layer_solid[y0 * self.width + x1] != -1 or \
-                    self.tile_layer_solid[y1 * self.width + x0] != -1 or \
-                    self.tile_layer_solid[y1 * self.width + x1] != -1
+            return (a_is_outside and self.tile_layer_solid[y0 * self.width + x0] != -1) or \
+                   (b_is_outside and self.tile_layer_solid[y0 * self.width + x1] != -1) or \
+                   (c_is_outside and self.tile_layer_solid[y1 * self.width + x0] != -1) or \
+                   (d_is_outside and self.tile_layer_solid[y1 * self.width + x1] != -1)
         except IndexError:
-            return True
+            return False
 
     ################################################################################################
     # Get average depth of collsion mask
