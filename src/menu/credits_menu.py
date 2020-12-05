@@ -21,9 +21,7 @@ class CreditsMenu(Menu):
 
         # Lines of text to be drawn
         self.info = [ \
-            Label(0, y - 30, game.SCREEN_WIDTH, 20, 24, "Caleb Limb"), \
-            Label(0, y - 10, game.SCREEN_WIDTH, 20, 24, "Wei Hsu"), \
-            Label(0, y + 10, game.SCREEN_WIDTH, 20, 24, "Paulo Dallastra") \
+            Label(0, y - 10, game.SCREEN_WIDTH, 20, 24, "Caleb Limb") \
             ]
 
     ################################################################################################
