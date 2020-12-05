@@ -2,18 +2,15 @@
 '''
 This hadles the chicken
 '''
-from enum import Enum
-import pygame
 import math
 import random
-from game import game
+import pygame
 from game.sprite import SpriteSheet, Sprite
-from menu.hud import HUD
 from ..mob import Mob
 from ...collision_mask import CollisionMask
-from ...projectile.fire_ball import Fireball
 
 class Chicken(Mob):
+    ''' CHICKEN '''
     # Starting direction
     direction = Mob.Direction.DOWN
 

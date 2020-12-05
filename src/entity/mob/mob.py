@@ -4,7 +4,6 @@ This handles everything that every creature has in common including the player
 '''
 from enum import Enum
 from ..entity import Entity
-from game.sounds import Sounds
 from game import game
 
 class Mob(Entity):

@@ -19,7 +19,8 @@ class GameLevel(Level):
     def __init__(self):
         #Call Level constructor
         super().__init__()
-        self.entities.append(game.PLAYER)
+        if not game.PLAYER in self.entities:
+            self.entities.append(game.PLAYER)
 
     ################################################################################################
     # Update Level

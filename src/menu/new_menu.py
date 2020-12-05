@@ -96,8 +96,8 @@ class NewMenu(Menu):
 
         print(self.player_choice)
         if self.button_new.action_event:
-            game.PLAYER = Player(15 * 16, 48 * 16, self.player_choice)
-            game.CHANGE_LEVEL = "LEVEL_TEST"
+            game.PLAYER = Player(15 * 16 + 8, 48 * 16 + 8, self.player_choice)
+            game.CHANGE_LEVEL = "LEVEL_CAMP"
             self.button_back.reset_action_event()
 
     ################################################################################################
