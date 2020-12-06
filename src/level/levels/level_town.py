@@ -27,7 +27,7 @@ class LevelTown(GameLevel):
         self.x_scroll = 400
         self.y_scroll = 400
 
-        for _ in range(32):
+        for _ in range(64):
             self.entities.append(Chicken(random.randint(0, self.tile_map.width * 16), random.randint(0, self.tile_map.height * 16)))
 
     def update(self):
