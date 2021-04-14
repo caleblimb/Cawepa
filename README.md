@@ -21,3 +21,13 @@ $ pip install pygame==2.0.0.dev12
 
 To execute the program: `$ python main.py`
 
+# Screenshots
+## Menu
+![Main Menu](screenshots/screenshot.png)
+
+## Character Select
+![Character Select Menu](screenshots/screenshot3.png)
+
+## Gameplay
+![Gameplay 1](screenshots/screenshot1.png)
+![Gameplay 2](screenshots/screenshot2.png)
