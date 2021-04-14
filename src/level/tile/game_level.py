@@ -6,6 +6,7 @@ from game import game
 from entity.mob.fauna.chicken import Chicken
 from entity.mob.player import Player
 from entity.mob.mob import Mob
+from entity.projectile.projectile import Projectile
 from ..level import Level
 from .tile import TileMap
 
@@ -34,6 +35,13 @@ class GameLevel(Level):
                 if entity.projectile:
                     self.entities.append(entity.projectile)
                     entity.projectile = None
+            if isinstance(entity, Projectile):
+                for c in self.entities:
+                    if isinstance(c, Chicken):
+                        if entity.x > c.x - 8 and entity.x < c.x + 8 and entity.y > c.y - 8 and entity.y < c.y + 8:
+                            c.explode()
+                            entity.exploded = True
+
         self.scroll_follow(game.PLAYER.x, game.PLAYER.y)
 
 
