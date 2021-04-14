@@ -1,6 +1,6 @@
 # Cawepa
 
-This is a simple 2d game.
+This is a simple 2d game made using pygame. It implements scrolling tile-levels as well as entity interactions. 
 
 # Development Environment
 
