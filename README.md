@@ -23,11 +23,11 @@ To execute the program: `$ python main.py`
 
 # Screenshots
 ## Menu
-![Main Menu](screenshots/screenshot.png)
+![Main Menu](screenshot.png)
 
 ## Character Select
-![Character Select Menu](screenshots/screenshot3.png)
+![Character Select Menu](screenshot3.png)
 
 ## Gameplay
-![Gameplay 1](screenshots/screenshot1.png)
-![Gameplay 2](screenshots/screenshot2.png)
+![Gameplay 1](screenshot1.png)
+![Gameplay 2](screenshot2.png)
